@@ -1,15 +1,64 @@
 {
   "name": "redux-miniprogram",
   "version": "1.0.0",
-  "description": "小程序绑定 redux 辅助工具，使用方式类似 react-redux",
-  "main": "index.js",
+  "description": "小程序 redux 绑定工具",
+  "main": "lib/redux-miniprogram.js",
+  "module": "lib/redux-miniprogram.es.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "lib",
+    "types"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c",
+    "lint": "eslint --ext ts --fix src test",
+    "prettier": "prettier .prettierrc.js --write",
+    "test": "jest",
+    "test:watch": "yarn test -- --watch",
+    "test:cov": "yarn test -- --coverage",
+    "coverage": "yarn test:cov --coverageReporters=text-lcov | coveralls"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && yarn test"
+    }
+  },
+  "lint-staged": {
+    "**/*.ts": [
+      "yarn lint",
+      "yarn prettier"
+    ]
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "babelConfig": true
+      }
+    },
+    "transform": {
+      "^.+\\.(t|j)s?$": "ts-jest"
+    },
+    "automock": false,
+    "clearMocks": true,
+    "coverageDirectory": "coverage",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/__tests__ /**/*.[jts?(x)",
+      "test /**/?(*.)+(spec|test).[tj]s?(x)",
+      "**/?(*.)+(spec|test).[tj]s?(x)"
+    ],
+    "transformIgnorePatterns": [
+      "/node_modules/"
+    ]
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/early-autumn/redux-miniprogram.git"
   },
+  "keywords": [
+    "redux",
+    "miniprogram"
+  ],
   "author": "early-autumn",
   "license": "MIT",
   "bugs": {
@@ -35,10 +84,10 @@
     "husky": "^4.2.3",
     "jest": "^25.1.0",
     "lint-staged": "^10.0.8",
+    "miniprogram-api-typings": "^2.10.2-1",
     "prettier": "^1.19.1",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-terser": "^5.3.0",
     "rollup-plugin-typescript2": "^0.26.0",
     "ts-jest": "^25.2.1",
     "typescript": "^3.8.3"
