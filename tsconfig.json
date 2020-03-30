@@ -6,7 +6,6 @@
       "dom",
       "es2017"
     ],
-    "jsx": "react",
     "declaration": true,
     "declarationDir": "./types",
     "sourceMap": true,
@@ -19,11 +18,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
   },
-  "exclude": [
-    "node_modules",
-    "rollup.config"
-  ],
   "include": [
-    "./src/**/*",
+    "./src/**/*"
   ]
 }

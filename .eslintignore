@@ -1,5 +1,5 @@
-/rollup.config.js
 /node_modules
-/lib
+/package
 /types
 /coverage
+/rollup.config.js

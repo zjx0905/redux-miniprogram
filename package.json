@@ -1,18 +1,20 @@
 {
   "name": "redux-miniprogram",
-  "version": "1.0.0",
-  "description": "小程序 redux 绑定工具",
-  "main": "lib/redux-miniprogram.js",
-  "module": "lib/redux-miniprogram.es.js",
+  "version": "1.0.25",
+  "description": "小程序数据流管理工具。",
+  "main": "package/lib/redux-miniprogram.js",
+  "module": "package/es/redux-miniprogram.js",
+  "miniprogram": "package/miniprogram",
   "types": "types/index.d.ts",
   "files": [
-    "lib",
+    "package",
+    "src",
     "types"
   ],
   "scripts": {
     "build": "rollup -c",
     "lint": "eslint --ext ts --fix src test",
-    "prettier": "prettier .prettierrc.js --write",
+    "prettier": "prettier --write --config .prettierrc \"{src,test}/**/*.{js,ts}\"",
     "test": "jest",
     "test:watch": "yarn test -- --watch",
     "test:cov": "yarn test -- --coverage",
@@ -20,36 +22,31 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && yarn test"
+      "pre-commit": "yarn lint && yarn prettier && yarn test && git add ."
     }
   },
-  "lint-staged": {
-    "**/*.ts": [
-      "yarn lint",
-      "yarn prettier"
-    ]
-  },
   "jest": {
+    "preset": "ts-jest",
     "globals": {
       "ts-jest": {
-        "babelConfig": true
+        "babelConfig": {
+          "presets": [
+            [
+              "@babel/preset-env",
+              {
+                "targets": {
+                  "node": "current"
+                }
+              }
+            ]
+          ],
+          "plugins": [
+            "@babel/plugin-proposal-optional-chaining",
+            "@babel/plugin-transform-modules-commonjs"
+          ]
+        }
       }
-    },
-    "transform": {
-      "^.+\\.(t|j)s?$": "ts-jest"
-    },
-    "automock": false,
-    "clearMocks": true,
-    "coverageDirectory": "coverage",
-    "testEnvironment": "node",
-    "testMatch": [
-      "**/__tests__ /**/*.[jts?(x)",
-      "test /**/?(*.)+(spec|test).[tj]s?(x)",
-      "**/?(*.)+(spec|test).[tj]s?(x)"
-    ],
-    "transformIgnorePatterns": [
-      "/node_modules/"
-    ]
+    }
   },
   "repository": {
     "type": "git",
@@ -71,6 +68,7 @@
   "devDependencies": {
     "@babel/core": "^7.8.7",
     "@babel/plugin-proposal-optional-chaining": "^7.8.3",
+    "@babel/plugin-transform-modules-commonjs": "^7.9.0",
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.8.7",
     "@babel/preset-typescript": "^7.8.3",
@@ -83,9 +81,9 @@
     "eslint-plugin-prettier": "^3.1.2",
     "husky": "^4.2.3",
     "jest": "^25.1.0",
-    "lint-staged": "^10.0.8",
-    "miniprogram-api-typings": "^2.10.2-1",
+    "miniprogram-api-typings": "^2.10.3",
     "prettier": "^1.19.1",
+    "redux": "^4.0.5",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-typescript2": "^0.26.0",
