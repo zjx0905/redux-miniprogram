@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 21:06:40
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-03-31 21:47:08
+ * @LastEditTime: 2020-03-31 22:03:59
  */
 import { UpdaterOptions } from '../types';
 import { useStore, useState } from '../hooks';
@@ -31,16 +31,19 @@ function createUpdater({ getState, getNextState, setState }: UpdaterOptions) {
 }
 
 function updating(): void {
-  if (committing.state === false) {
-    committing.commit(() => {
-      return Promise.resolve().then(() => {
-        const state = useState();
-
-        updaters.forEach((updater) => updater(state));
-        committing.end();
-      });
-    });
+  if (committing.state) {
+    return;
   }
+
+  committing.commit(() => {
+    Promise.resolve().then(() => {
+      const state = useState();
+
+      updaters.forEach((updater) => updater(state));
+
+      committing.end();
+    });
+  });
 }
 
 function subscribe(options: UpdaterOptions) {
