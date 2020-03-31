@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 17:18:03
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-03-31 21:18:26
+ * @LastEditTime: 2020-03-31 21:43:41
  */
 import { Committing } from '../types';
 import { useDispatch } from '../hooks';
@@ -14,9 +14,9 @@ export default function defineProperty(
   currentState: AnyObject,
   currentDispatch: AnyObject
 ): void {
-  // return `获取 store 中的状态: wxml 中通过 store.xxx 获取, js 中通过 this.store.xxx 获取`;
+  // const GET_ERROR_MESSAGE = `获取 store 中的状态: wxml 中通过 store.xxx 获取, js 中通过 this.store.xxx 获取`;
+  const SET_ERROR_MESSAGE = `修改 store 中的状态: 必须通过 dispatch 完成`;
   const dispatch = useDispatch();
-  const message = `修改 store 中的状态: 必须通过 dispatch 完成`;
   const proxy = new Proxy(
     { ...currentState, ...currentDispatch, dispatch },
     {
@@ -24,7 +24,7 @@ export default function defineProperty(
         return obj[key];
       },
       set(obj: AnyObject, key: string, value: any) {
-        assert(!committing.state, message);
+        assert(!committing.state, SET_ERROR_MESSAGE);
         obj[key] = value;
         return true;
       },
@@ -36,7 +36,7 @@ export default function defineProperty(
       return proxy;
     },
     set() {
-      assert(!committing.state, message);
+      assert(!committing.state, SET_ERROR_MESSAGE);
     },
   });
 
@@ -45,7 +45,7 @@ export default function defineProperty(
       return proxy;
     },
     set() {
-      assert(!committing.state, message);
+      assert(!committing.state, SET_ERROR_MESSAGE);
     },
   });
 }

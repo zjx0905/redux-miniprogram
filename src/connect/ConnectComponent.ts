@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-25 14:54:52
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-03-31 21:17:41
+ * @LastEditTime: 2020-03-31 21:47:28
  */
 import { ComponentOptions, ConnectComponentInstance, ConnectComponentOptions } from '../types';
 import { useState, useDispatch } from '../hooks';
@@ -15,7 +15,9 @@ export default function ConnectComponent<T extends AnyObject>(
   mapStateToStore: <S extends AnyObject>(state: S) => AnyObject = mapStateToStoreDefault,
   mapDispatchToStore = mapDispatchToStoreDefault
 ) {
-  return function withOptions<A extends ComponentOptions>(options: ConnectComponentInstance<T, A>) {
+  return function ConnectStoreWithOptions<A extends ComponentOptions>(
+    options: ConnectComponentInstance<T, A>
+  ) {
     const committing = createCommitting();
     const currentState = mapStateToStore(useState());
     const currentDispatch = mapDispatchToStore(useDispatch());
@@ -30,12 +32,12 @@ export default function ConnectComponent<T extends AnyObject>(
 
       unsubscribe = batchUpdate.subscribe({
         getState: (): AnyObject => currentState,
+        getNextState: mapStateToStore,
         setState: (updateState: AnyObject) => {
           committing.commit(() => {
             (this as { setData?: Function }).setData?.(updateState, committing.end);
           });
         },
-        getNextState: mapStateToStore,
       });
 
       if (load !== undefined) {

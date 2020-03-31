@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-28 17:41:06
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-03-31 21:01:09
+ * @LastEditTime: 2020-03-31 21:39:27
  */
 import 'miniprogram-api-typings';
 import { Store } from 'redux';
@@ -61,7 +61,7 @@ export declare type ConnectComponentOptions<T extends AnyObject, A extends Compo
 
 export interface Committing {
   state: boolean;
-  commit: (handler: (end?: () => void) => Promise<void> | void) => void;
+  commit: (handler: (end: () => void) => Promise<void> | void) => void;
   end: () => void;
 }
 

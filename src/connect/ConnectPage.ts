@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-25 14:54:52
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-03-31 21:17:48
+ * @LastEditTime: 2020-03-31 21:36:48
  */
 import { PageOptions, ConnectPageInstance, ConnectPageOptions } from '../types';
 import { useState, useDispatch } from '../hooks';
@@ -15,7 +15,9 @@ export default function ConnectPage<T extends AnyObject>(
   mapStateToStore: <S extends AnyObject>(state: S) => AnyObject = mapStateToStoreDefault,
   mapDispatchToStore = mapDispatchToStoreDefault
 ) {
-  return function withOptions<A extends PageOptions>(options: ConnectPageInstance<T, A>) {
+  return function ConnectStoreWithOptions<A extends PageOptions>(
+    options: ConnectPageInstance<T, A>
+  ) {
     const committing = createCommitting();
     const currentState = mapStateToStore(useState());
     const currentDispatch = mapDispatchToStore(useDispatch());
