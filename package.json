@@ -1,10 +1,9 @@
 {
   "name": "redux-miniprogram",
-  "version": "1.0.25",
-  "description": "小程序数据流管理工具。",
-  "main": "package/lib/redux-miniprogram.js",
-  "module": "package/es/redux-miniprogram.js",
-  "miniprogram": "package/miniprogram",
+  "version": "1.0.30",
+  "description": "小程序版 redux 绑定工具",
+  "main": "package/index.js",
+  "miniprogram": "package",
   "types": "types/index.d.ts",
   "files": [
     "package",
@@ -22,7 +21,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint && yarn prettier && yarn test && git add ."
+      "pre-committing": "yarn lint && yarn prettier && yarn test && git add ."
     }
   },
   "jest": {
@@ -62,11 +61,9 @@
     "url": "https://github.com/early-autumn/redux-miniprogram/issues"
   },
   "homepage": "https://github.com/early-autumn/redux-miniprogram#readme",
-  "dependencies": {
-    "@babel/runtime": "^7.8.7"
-  },
   "devDependencies": {
     "@babel/core": "^7.8.7",
+    "@babel/runtime": "^7.8.7",
     "@babel/plugin-proposal-optional-chaining": "^7.8.3",
     "@babel/plugin-transform-modules-commonjs": "^7.9.0",
     "@babel/plugin-transform-runtime": "^7.8.3",

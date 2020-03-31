@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-28 17:41:06
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-03-30 18:40:03
+ * @LastEditTime: 2020-03-31 21:01:09
  */
 import 'miniprogram-api-typings';
 import { Store } from 'redux';
@@ -59,15 +59,14 @@ export declare type ConnectComponentOptions<T extends AnyObject, A extends Compo
   store: T;
 } & A;
 
-export interface Commit {
+export interface Committing {
   state: boolean;
-  start: (handler: () => void) => void;
+  commit: (handler: (end?: () => void) => Promise<void> | void) => void;
   end: () => void;
 }
 
 export interface UpdaterOptions {
   getState: () => AnyObject;
-  setState: (nextState: AnyObject, updateState: AnyObject) => void;
   getNextState: (state: AnyObject) => AnyObject;
-  shouldUpdate?: (state: AnyObject, nextState: AnyObject) => boolean;
+  setState: (updateState: AnyObject) => void;
 }
