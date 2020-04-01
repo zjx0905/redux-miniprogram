@@ -2,11 +2,11 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 21:06:40
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-03-31 22:03:59
+ * @LastEditTime: 2020-04-01 16:27:19
  */
 import { UpdaterOptions } from '../types';
 import { useStore, useState } from '../hooks';
-import isEmpty from './isEmpty';
+import { isEmpty } from './index';
 import createCommitting from './createCommitting';
 import diff from './diff';
 
@@ -31,7 +31,7 @@ function createUpdater({ getState, getNextState, setState }: UpdaterOptions) {
 }
 
 function updating(): void {
-  if (committing.state) {
+  if (committing.state === true) {
     return;
   }
 

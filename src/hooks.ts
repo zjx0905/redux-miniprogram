@@ -2,13 +2,16 @@
  * @Author: early-autumn
  * @Date: 2020-03-30 13:37:39
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-03-31 21:15:30
+ * @LastEditTime: 2020-04-01 20:32:38
  */
 import { Store, Dispatch } from 'redux';
-import assert from './utils/assert';
+import { assert } from './utils';
 
 let store: Store;
 
+/**
+ * 获取 store 对象
+ */
 export function useStore(): Store {
   if (store === undefined) {
     store = getApp().store as Store;
@@ -22,6 +25,9 @@ export function useStore(): Store {
   return store;
 }
 
+/**
+ * 获取 store 中的 state
+ */
 export function useState(): AnyObject {
   if (store === undefined) {
     useStore();
@@ -30,6 +36,9 @@ export function useState(): AnyObject {
   return store.getState();
 }
 
+/**
+ * 获取 store 中的 dispatch 函数
+ */
 export function useDispatch(): Dispatch {
   if (store === undefined) {
     useStore();
