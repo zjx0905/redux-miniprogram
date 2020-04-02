@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-04-01 10:07:34
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-01 20:29:52
+ * @LastEditTime: 2020-04-01 21:18:01
  */
 
 /**
@@ -12,7 +12,7 @@
  */
 export function assert(error: boolean, message: string): void {
   if (error) {
-    throw new Error(`[redux-miniprogram]:
+    throw new Error(`[redux-miniprogram]
     ${message}`);
   }
 }

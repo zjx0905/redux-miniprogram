@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-28 17:41:06
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-03-31 21:39:27
+ * @LastEditTime: 2020-04-03 00:20:23
  */
 import 'miniprogram-api-typings';
 import { Store } from 'redux';
@@ -31,8 +31,7 @@ export declare type PageOptions = WechatMiniprogram.Page.Options<
 
 export declare type ConnectPageInstance<T extends AnyObject, A extends PageOptions> = ThisType<
   { store: T } & PageInstance
-> &
-  A;
+> & { store: T; data: Record<string, any> } & A;
 
 export declare type ConnectPageOptions<T extends AnyObject, A extends PageOptions> = {
   store: T;
@@ -53,7 +52,7 @@ export declare type ComponentOptions = WechatMiniprogram.Component.Options<
 export declare type ConnectComponentInstance<
   T extends AnyObject,
   A extends ComponentOptions
-> = ThisType<{ store: T } & ComponentInstance> & A;
+> = ThisType<{ store: T } & ComponentInstance> & { store: T; data: Record<string, any> } & A;
 
 export declare type ConnectComponentOptions<T extends AnyObject, A extends ComponentOptions> = {
   store: T;
@@ -69,4 +68,8 @@ export interface UpdaterOptions {
   getState: () => AnyObject;
   getNextState: (state: AnyObject) => AnyObject;
   setState: (updateState: AnyObject) => void;
+}
+
+export interface Updater {
+  (state: AnyObject): void;
 }

@@ -2,53 +2,45 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 21:06:40
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-01 16:27:19
+ * @LastEditTime: 2020-04-03 00:40:52
  */
-import { UpdaterOptions } from '../types';
+import { UpdaterOptions, Updater } from '../types';
 import { useStore, useState } from '../hooks';
 import { isEmpty } from './index';
 import createCommitting from './createCommitting';
 import diff from './diff';
 
 const committing = createCommitting();
-const updaters: Function[] = [];
+const updaters: Updater[] = [];
 let subscribed = false;
 
-function createUpdater({ getState, getNextState, setState }: UpdaterOptions) {
-  return function updater(state: AnyObject) {
-    const currentState = getState();
-    const nextState = getNextState(state);
+function updating(): void {
+  if (committing.state === false) {
+    committing.commit(() => {
+      Promise.resolve().then(() => {
+        const state = useState();
+
+        updaters.forEach((updater) => updater(state));
+        committing.end();
+      });
+    });
+  }
+}
+
+function create(options: UpdaterOptions): Updater {
+  return function updater(state) {
+    const currentState = options.getState();
+    const nextState = options.getNextState(state);
     const updateState = diff(currentState, nextState);
 
-    if (isEmpty(updateState)) {
-      return;
+    if (!isEmpty(updateState)) {
+      Object.assign(currentState, nextState);
+      options.setState(updateState);
     }
-
-    setState(updateState);
-
-    Object.assign(currentState, nextState);
   };
 }
 
-function updating(): void {
-  if (committing.state === true) {
-    return;
-  }
-
-  committing.commit(() => {
-    Promise.resolve().then(() => {
-      const state = useState();
-
-      updaters.forEach((updater) => updater(state));
-
-      committing.end();
-    });
-  });
-}
-
-function subscribe(options: UpdaterOptions) {
-  const updater = createUpdater(options);
-
+function subscribe(updater: Updater): void {
   updaters.push(updater);
 
   if (subscribed === false) {
@@ -58,14 +50,18 @@ function subscribe(options: UpdaterOptions) {
 
     store.subscribe(updating);
   }
+}
 
-  return function unsubscribe() {
-    const index = updaters.indexOf(updater);
+function unsubscribe(updater: Updater): void {
+  const index = updaters.indexOf(updater);
 
+  if (index !== -1) {
     updaters.splice(index, 1);
-  };
+  }
 }
 
 export default {
+  create,
   subscribe,
+  unsubscribe,
 };
