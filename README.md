@@ -21,6 +21,7 @@ npm i redux-miniprogram
 
 微信小程序版 redux 绑定工具，使用体验类似 react-redux。
 
+* 支持 批量更新
 * 支持 typescript
 
 ## 使用
@@ -64,7 +65,7 @@ export default store;
 ```typescript
 // app.js
 import { Provider } from "redux-miniprogram";
-import store from "./store/index";
+import store from "./store";
 
 App(
   Provider(store)({
@@ -78,27 +79,35 @@ App(
 3. 页面中使用。
 
 ```typescript
-// ./pages/index/index.js
+// pages/index/index.js
 import { ConnectPage } from "redux-miniprogram";
-import { saveCount } from '../../store/index';
+import { saveCount } from '../../store';
+
+function mapStateToStore(state) {
+  return {
+    count: state.count
+  };
+}
+
+function mapDispatchToStore(dispatch) {
+  return {
+    saveCountDispatch(count) {
+      dispatch(saveCount(count));
+    }
+  };
+}
 
 Page(
-  ConnectPage(state => {
-    return {
-      count: state.count
-    };
-  })({
+  ConnectPage(mapStateToStore, mapDispatchToStore)({
     data: {},
     onLoad: function() {
-
       // 使用了和 vue 一样的批量更新 多次修改会合并成一次
-
       this.store.dispatch(saveCount(10));
       this.store.dispatch(saveCount(20));
-      this.store.dispatch(saveCount(100));
+      this.store.saveCountDispatch(30);
+      this.store.saveCountDispatch(100); 
 
       // 批量更新是异步的
-
       console.log(this.store.count); // 0
 
       setTimeout(() => {
@@ -109,22 +118,25 @@ Page(
 );
 ```
 
-3. 自定义组件中使用。
+3. 自定义组件中使用，和页面中的用法一致，只需要把 ConnectPage 换成 ConnectComponent 就可以了。
 
 ```typescript
-// ./components/index/index.js
+// components/index/index.js
 import { ConnectComponent } from "redux-miniprogram";
-import { saveCount } from '../../store/index';
+import { saveCount } from '../../store';
+
+function mapStateToStore(state) {
+  return {
+    count: state.count
+  };
+}
 
 Component(
-  ConnectComponent(state => {
-    return {
-      count: state.count
-    };
-  })({
+  ConnectComponent(mapStateToStore)({
     data: {},
     attached: function() {
       this.store.dispatch(saveCount(100));
+
       setTimeout(() => {
         console.log(this.store.count); // 100
       }, 0)
