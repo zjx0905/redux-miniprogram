@@ -2,10 +2,9 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 17:18:03
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-03 19:56:34
+ * @LastEditTime: 2020-04-03 21:00:57
  */
 import { Committing } from '../types';
-import { useDispatch } from '../hooks';
 import { assert } from './index';
 
 const GET_ERROR_MESSAGE = `需要通过 this.store.xxx 获取 store 中的状态`;
