@@ -2,40 +2,40 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 17:18:03
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-03 00:24:23
+ * @LastEditTime: 2020-04-03 19:56:34
  */
 import { Committing } from '../types';
+import { useDispatch } from '../hooks';
 import { assert } from './index';
 
-// const GET_ERROR_MESSAGE = `获取 store 中的状态: wxml 中通过 store.xxx 获取, js 中通过 this.store.xxx 获取`;
-const SET_ERROR_MESSAGE = `修改 store 中的状态: 只能通过 dispatch 完成`;
+const GET_ERROR_MESSAGE = `需要通过 this.store.xxx 获取 store 中的状态`;
+const SET_ERROR_MESSAGE = `需要通过 dispatch 修改 store 中的状态`;
+const EMPTY = Object.create(null);
 
 export default function defineProperty(
   instance: { data: Record<string, any>; store: AnyObject },
   committing: Committing,
-  store: AnyObject
+  currentState: AnyObject,
+  currentDispatch: AnyObject
 ): void {
-  const proxy = new Proxy(store, {
-    get(obj: AnyObject, key: string) {
-      return obj[key];
+  Object.defineProperty(instance.data, 'store', {
+    get() {
+      assert(!committing.state, GET_ERROR_MESSAGE);
+
+      return EMPTY;
     },
     set() {
       assert(!committing.state, SET_ERROR_MESSAGE);
-      return false;
     },
+    enumerable: false,
   });
 
-  function defineProperty(obj: AnyObject) {
-    Object.defineProperty(obj, 'store', {
-      get() {
-        return proxy;
-      },
-      set() {
-        assert(!committing.state, SET_ERROR_MESSAGE);
-      },
-    });
-  }
-
-  defineProperty(instance);
-  defineProperty(instance.data);
+  Object.defineProperty(instance, 'store', {
+    get() {
+      return { ...currentState, ...currentDispatch };
+    },
+    set() {
+      assert(!committing.state, SET_ERROR_MESSAGE);
+    },
+  });
 }
