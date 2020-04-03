@@ -23,7 +23,7 @@ npm i redux-miniprogram
 
 * 支持 批量更新
 * 支持 typescript
-> 为了尽可能的节省性能，使用 Promise 更新状态，使用 setTimeout 更新视图。
+> 为了尽可能的节省性能，使用 Promise 异步更新状态，使用 setTimeout 异步更新视图。
 
 ## 使用
 
@@ -290,7 +290,7 @@ const Connected = ConnectPage(mapStateToStore, mapDispatchToProps);
 // 返回一个含有 store 属性的新 Page Object
 const pageOptions = Connected(options);
 
-// pageOptions.store 就是调用 mapStateToStore 和 mapDispatchToProps 合并出的 ConnectStore
+// pageOptions.store 就是通过 mapStateToStore 和 mapDispatchToProps 的返回值合并出的 ConnectStore
 
 // 然后把新的 Page Object 传给 Page
 Page(pageOptions);
@@ -411,7 +411,7 @@ const Connected = ConnectComponent(mapStateToStore, mapDispatchToProps);
 // 返回一个含有 store 属性的新 Component Object
 const componentOptions = Connected(options);
 
-// componentOptions.store 就是调用 mapStateToStore 和 mapDispatchToProps 合并出的 ConnectStore
+// componentOptions.store 就是通过 mapStateToStore 和 mapDispatchToProps 的返回值合并出的 ConnectStore
 
 // 然后把新的 Component Object 传给 Component
 Component(componentOptions);
