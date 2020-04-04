@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 12:37:19
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-04 19:59:32
+ * @LastEditTime: 2020-04-05 01:11:25
  */
 import {
   MapStateToStore,
@@ -27,72 +27,56 @@ export default function connect(
   mapStateToStore: MapStateToStore = mapStateToStoreDefault,
   mapDispatchToStore: MapDispatchToStore = mapDispatchToStoreDefault
 ) {
+  const committing = createCommitting();
+  const currentState = mapStateToStore(useState());
+  const currentDispatch = mapDispatchToStore(useDispatch());
+
+  verifyPlainObject('mapStateToStore()', currentState);
+  verifyPlainObject('mapDispatchToStore()', currentDispatch);
+
+  const instances: ConnectInstance[] = [];
+  let unsubscribe: Function;
+
+  function updater(state: AnyObject) {
+    if (instances.length === 0) {
+      return;
+    }
+
+    committing.commit((end) => {
+      const nextState = mapStateToStore(state);
+      const updateState = diff(currentState, nextState);
+
+      if (isEmptyObject(updateState)) {
+        return;
+      }
+
+      Object.assign(currentState, nextState);
+
+      instances.forEach((instance) => instance.setData(updateState));
+
+      end();
+    });
+  }
+
   return function connected(options: ConnectInstance): ConnectOptions {
-    const committing = createCommitting();
-    const currentDispatch = mapDispatchToStore(useDispatch());
-
-    let currentState = mapStateToStore(useState());
-
-    verifyPlainObject('mapStateToStore()', currentState);
-
-    verifyPlainObject('mapDispatchToStore()', currentDispatch);
-
-    verifyPlainObject('Options', options);
-
-    let unsubscribe: Function;
-
-    let updateCache: AnyObject[] = [];
-
-    function getUpdateCache(): AnyObject[] {
-      const cache = updateCache;
-
-      updateCache = [];
-
-      return cache;
-    }
-
-    function updater(updating: Function) {
-      return function listener(state: AnyObject) {
-        const nextState = mapStateToStore(state);
-        const updateState = diff(currentState, nextState);
-
-        if (isEmptyObject(updateState)) {
-          return;
-        }
-
-        updateCache.push(updateState);
-
-        currentState = nextState;
-
-        updating();
-      };
-    }
-
     function load(this: ConnectInstance): void {
       proxy(this, committing, currentState, currentDispatch);
 
-      const updating = () => {
-        if (committing.state === true) {
-          return;
-        }
+      if (instances.length === 0) {
+        unsubscribe = batchUpdate.subscribe(updater);
+      }
 
-        committing.commit((end) => {
-          setTimeout(() => {
-            const updateCatch = getUpdateCache();
-            const updateState = updateCatch.reduce((current, next) => {
-              return { ...current, ...next };
-            }, {});
-
-            this.setData(updateState, end);
-          });
-        });
-      };
-
-      unsubscribe = batchUpdate.subscribe(updater(updating));
+      instances.push(this);
     }
 
-    function unload(): void {
-      unsubscribe();
+    function unload(this: ConnectInstance): void {
+      const index = instances.indexOf(this);
+
+      instances.splice(index, 1);
+
+      if (instances.length === 0) {
+        unsubscribe();
+      }
     }
 
     return mixinLifetimes(type, mixinData({ ...options }, currentState), load, unload);

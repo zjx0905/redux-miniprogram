@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 21:06:40
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-04 19:34:22
+ * @LastEditTime: 2020-04-04 21:47:30
  */
 import { useStore, useState } from '../hooks';
 import createCommitting from './createCommitting';
@@ -21,6 +21,7 @@ function updating(): void {
       const state = useState();
 
       listeners.forEach((listener) => listener(state));
+
       end();
     });
   });

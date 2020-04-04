@@ -24,7 +24,7 @@ npm i redux-miniprogram
 * 支持 批量更新
 * 支持 typescript
 
-> 为了尽可能节省性能，使用 Promise 异步更新状态，使用 setTimeout 异步更新视图。
+> 批量更新是异步的。
 
 ## 使用
 
