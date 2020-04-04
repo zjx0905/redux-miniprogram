@@ -2,26 +2,32 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 12:37:19
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-04 19:44:37
+ * @LastEditTime: 2020-04-04 19:59:32
  */
-import { MapStateToStore, MapDispatchToStore, ConnectInstance, ConnectType } from '../types';
+import {
+  MapStateToStore,
+  MapDispatchToStore,
+  ConnectType,
+  ConnectInstance,
+  ConnectOptions,
+} from '../types';
 import { useState, useDispatch } from '../hooks';
 import createCommitting from '../utils/createCommitting';
 import batchUpdate from '../utils/batchUpdate';
+import verifyPlainObject from '../utils/verifyPlainObject';
 import diff from '../utils/diff';
 import isEmptyObject from '../utils/isEmptyObject';
-import verifyPlainObject from '../utils/verifyPlainObject';
 import { mapStateToStoreDefault, mapDispatchToStoreDefault } from './default';
 import proxy from './proxy';
-import mixinLifetimes from './mixinLifetimes';
 import mixinData from './mixinData';
+import mixinLifetimes from './mixinLifetimes';
 
 export default function connect(
   type: ConnectType,
   mapStateToStore: MapStateToStore = mapStateToStoreDefault,
   mapDispatchToStore: MapDispatchToStore = mapDispatchToStoreDefault
 ) {
-  return function connected(options: ConnectInstance) {
+  return function connected(options: ConnectInstance): ConnectOptions {
     const committing = createCommitting();
     const currentDispatch = mapDispatchToStore(useDispatch());
 
