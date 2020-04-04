@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 13:06:27
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-04 13:53:34
+ * @LastEditTime: 2020-04-04 15:28:42
  */
 import { ConnectType, ConnectOptions } from '../types';
 
@@ -13,7 +13,7 @@ function paqeLifetimes(options: ConnectOptions, load: () => void, unload: () => 
   options.onLoad = function(query: any) {
     load.call(this);
 
-    if (oldLoad) {
+    if (oldLoad !== undefined) {
       oldLoad.call(this, query);
     }
   };

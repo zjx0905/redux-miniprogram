@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-25 14:54:52
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-04 13:27:43
+ * @LastEditTime: 2020-04-04 19:32:03
  */
 import {
   MapStateToStore,
@@ -11,7 +11,7 @@ import {
   ConnectComponentInstance,
   ConnectComponentOptions,
 } from '../types';
-import connect from './connect';
+import connect from '../connect';
 
 /**
  *

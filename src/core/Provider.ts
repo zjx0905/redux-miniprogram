@@ -2,10 +2,10 @@
  * @Author: early-autumn
  * @Date: 2020-03-25 14:59:14
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-03 18:34:20
+ * @LastEditTime: 2020-04-04 19:32:14
  */
 import { Store } from 'redux';
-import { AppOptions, ProviderInstance, ProviderOptions } from './types';
+import { AppOptions, ProviderInstance, ProviderOptions } from '../types';
 
 /**
  *

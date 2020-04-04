@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-28 17:41:06
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-04 13:44:49
+ * @LastEditTime: 2020-04-04 15:27:29
  */
 import 'miniprogram-api-typings';
 import { Store, Dispatch } from 'redux';
@@ -84,17 +84,6 @@ export interface Committing {
   commit: (handler: (end: () => void) => Promise<void> | void) => void;
   end: () => void;
 }
-
-export interface UpdaterOptions {
-  getState: () => AnyObject;
-  getNextState: (state: AnyObject) => AnyObject;
-  setState: (updateState: AnyObject) => void;
-}
-
-export interface Updater {
-  (state: AnyObject): void;
-}
-
 export interface MapStateToStore {
   <T extends AnyObject>(state: T): AnyObject;
 }

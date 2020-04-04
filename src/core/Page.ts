@@ -11,7 +11,7 @@ import {
   ConnectPageInstance,
   ConnectPageOptions,
 } from '../types';
-import connect from './connect';
+import connect from '../connect';
 
 /**
  *
