@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 12:37:19
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-04 13:51:21
+ * @LastEditTime: 2020-04-04 14:35:44
  */
 import {
   MapStateToStore,
@@ -17,6 +17,7 @@ import batchUpdate from '../utils/batchUpdate';
 import { mapStateToStoreDefault, mapDispatchToStoreDefault } from './default';
 import proxy from './proxy';
 import mixinLifetimes from './mixinLifetimes';
+import mixinData from './mixinData';
 
 export default function connect(
   type: ConnectType,
@@ -54,6 +55,6 @@ export default function connect(
       batchUpdate.unsubscribe(updater);
     }
 
-    return mixinLifetimes(type, options, load, unload);
+    return mixinLifetimes(type, mixinData(options, currentState), load, unload);
   };
 }
