@@ -2,15 +2,10 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 18:40:24
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-03 19:56:08
+ * @LastEditTime: 2020-04-04 13:58:20
  */
-import { Dispatch } from 'redux';
+import { MapStateToStore, MapDispatchToStore } from '../types';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const mapStateToStoreDefault = (_state: AnyObject): AnyObject => {
-  return {};
-};
+export const mapStateToStoreDefault: MapStateToStore = () => ({});
 
-export const mapDispatchToStoreDefault = (dispatch: Dispatch): AnyObject => {
-  return { dispatch };
-};
+export const mapDispatchToStoreDefault: MapDispatchToStore = (dispatch) => ({ dispatch });
