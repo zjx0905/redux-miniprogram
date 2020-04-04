@@ -23,7 +23,8 @@ npm i redux-miniprogram
 
 * 支持 批量更新
 * 支持 typescript
-> 为了尽可能的节省性能，使用 Promise 异步更新状态，使用 setTimeout 异步更新视图。
+
+> 为了尽可能节省性能，使用 Promise 异步更新状态，使用 setTimeout 异步更新视图。
 
 ## 使用
 
@@ -71,7 +72,7 @@ import store from "./store";
 App(
   Provider(store, {
     onLaunch: function() {
-      console.log(this.store); // 传入的 store
+      console.log(this.store); // 可以获取到 Redux Store
     }
   })
 );
@@ -119,7 +120,7 @@ Page(
 );
 ```
 
-3. `Component` 中和 `Page` 中的用法完全一致，连接 `Redux Store`，只需要把 `ConnectPage` 换成 `ConnectComponent` 就可以了。
+3. `Component` 中使用 `ConnectComponent` 连接 `Redux Store`。
 
 ```typescript
 // components/index/index.js
@@ -142,7 +143,7 @@ Component(
 );
 ```
 
-4. `wxml` 中使用 `ConnectStore` 中的状态。
+4. `wxml` 中使用 `store.xxx` 获取 `ConnectStore` 中的状态。
 
 ```html
 <view>{{store.count}}</view>
@@ -173,18 +174,17 @@ const options = {
 }
 
 // 把 Redux Store 和 App Options 传给 Provider
-// 返回一个含有 store 属性的新 App Options
+// 返回一个新的 App Options
 const appOptions = Provider(store, options);
 
-// 然后把新的 App Options 传给 App
+// 然后把新的 App Options 传入 App
 App(appOptions);
 
 // 以上可以直接简写成以下形式
 App(
   Provider(store, {
     onLaunch: function() {
-      // 可以获取到调用 Provider 时传入的 Redux Store
-      console.log(this.store);
+      ...
     }
   })
 );
@@ -192,48 +192,56 @@ App(
 
 ### `ConnectPage(mapStateToStore?, mapDispatchToStore?)`
 
-`ConnectPage` 用来连接 `Redux Store` 和 `Page`，调用 `ConnectPage` 可以创建一个 `ConnectStore`，并把 `ConnectStore` 添加到 `Page Options` 中。
+`ConnectPage` 用来连接 `Page` 和 `Redux Store`，使用 `ConnectPage` 可以创建一个 `ConnectStore`，然后把 `ConnectStore` 添加到 `Page Options` 中。
 
 #### 参数
 
-`ConnectPage` 接收两个参数，均为可选。
+`ConnectPage()` 接收两个参数，均为可选。
 
 1. `mapStateToStore?: (state) => Object`
 
 2. `mapDispatchToStore?: (dispatch) => Object`
 
-> mapStateToStore() 和 mapDispatchToStore() 的返回值会合并成一个 ConnectStore。
+> mapStateToStore() 和 mapDispatchToStore() 返回的 Object 会合并成一个 ConnectStore。
 
 #### 返回值
+
+`ConnectPage()` 返回一个 `Connected` 函数
 
 `Connected: (options) => Object`
 
 #### `mapStateToStore?: (state) => Object`
 
-`mapStateToStore` 用来订阅 `Redux Store` 中的状态，接收一个参数 `state` 就是 `Redux Store` 中的状态，返回一个 `Object` 就是您需要订阅的状态。
+`mapStateToStore` 用来订阅 `Redux Store` 中的 `state`。
+
+`mapStateToStore` 调用时以 `state` 作为参数，返回的 `Object` 就是订阅的状态。
 
 > 如果 ConnectPage() 没有传入 mapStateToStore，则不会订阅任何状态。
 
 ```typescript
-// 假如这是 Redux Store 中的状态
+// 如果这是 Redux Store 中的状态
 const state = {
   count: 0
 }
 
-// 订阅状态 count
+// 这样订阅 count 状态
 const mapStateToStore = (state) => {
   return {
     count: state.count
   }
 }
 
-// 订阅所有状态
+// 这样订阅所有状态
 const mapStateToStore = (state) => state;
 ```
 
 #### `mapDispatchToStore?: (dispatch) => Object`
 
-`mapDispatchToStore` 调用时以 `dispatch` 作为参数。通常情况下，你会利用这个 `dispatch` 来创建内部调用了 `dispatch` 的新函数。
+`mapDispatchToStore` 用来包装 `Redux Store` 中的 `dispatch`。
+
+`mapDispatchToStore` 调用时以 `dispatch` 作为参数。
+
+通常情况下，你会利用这个 `dispatch` 来创建内部调用了 `dispatch` 的新函数。
 
 ```typescript
 const mapDispatchToStore = dispatch => {
@@ -247,9 +255,7 @@ const mapDispatchToStore = dispatch => {
 }
  ```
 
-> 传入了 mapDispatchToStore 后，将不再默认添加 dispatch 到 ConnectStore，因为 mapDispatchToStore 的默认值为 (dispatch) => ({ dispatch })，所有不传 mapDispatchToStore 的情况下 ConnectStore 中才会默认有一个 dispatch 函数。
-
-最终 `mapStateToStore` 和 `mapDispatchToStore` 的返回值会合并成一个 `ConnectStore`。
+> mapDispatchToStore 的默认值为 (dispatch) => ({ dispatch })，所以 ConnectPage() 没有传入 mapDispatchToStore 的情况下 ConnectStore 中会默认存在一个 dispatch 函数。
 
 #### `Connected: (options) => Object`
 
@@ -261,7 +267,7 @@ const mapDispatchToStore = dispatch => {
 
 `Object` ([Page Options](https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html)) 一个新的注册小程序中的一个页面所需的参数
 
-`Connected` 用来把 `ConnectStore` 添加到 `Page Options` 中，使 `wxml` 中 `store.xxx` 和 `js` 中 `this.store.xxx` 能访问到 `ConnectStore` 中的状态和 `dispatch` 函数。
+`Connected` 用来把 `ConnectStore` 添加到 `Page Options` 中，使 `wxml` 中 `store.xxx` 和 `javascript` 中 `this.store.xxx` 能获取到 `ConnectStore` 中的状态和 `dispatch` 函数。
 
 ```tsx
 // Page Options
@@ -271,35 +277,31 @@ const options = {
   }
 }
 
-const mapStateToStore = (state) => {
-  return {
-    count: state.count
-  }
-}
+const mapStateToStore = state => ({
+  count: state.count
+});
 
-const mapDispatchToStore = dispatch => {
-  return {
-    increment: () => dispatch({ type: 'INCREMENT' }),
-    dispatch,
-  }
-}
+const mapDispatchToStore = dispatch => ({
+  increment: () => dispatch({ type: 'INCREMENT' }),
+  dispatch,
+});
 
 // 把 mapStateToStore 和 mapDispatchToStore 传给 ConnectPage
 // 返回 Connected 函数
 const Connected = ConnectPage(mapStateToStore, mapDispatchToStore);
 
 // 把 Page Options 传给 Connected
-// 返回一个含有 store 属性的新 Page Options
+// 返回一个新的 Page Options
 const pageOptions = Connected(options);
 
-// 然后把新的 Page Options 传给 Page
+// 然后把新的 Page Options 传入 Page
 Page(pageOptions);
 
 // 以上可以直接简写成以下形式
 Page(
   ConnectPage(mapStateToStore, mapDispatchToStore)({
     onLoad: function() {
-      // this.store 就是 mapStateToStore 和 mapDispatchToStore 的返回值合并出的 ConnectStore
+      // this.store 获取到的就是 ConnectStore
       console.log(this.store.count);
       this.store.increment();
       this.store.dispatch({ type: 'INCREMENT' });
@@ -307,54 +309,62 @@ Page(
   })
 );
 
-// wxml 中 store.count 就是 ConnectStore 中的状态
+// wxml 中 store.count 获取的就是 ConnectStore 中的状态
 <view>{{store.count}}</view>
  ```
 
-### `ConnectComponent(mapStateToStore?, mapDispatchToStore?)`
+ ### `ConnectComponent(mapStateToStore?, mapDispatchToStore?)`
 
-`ConnectComponent` 用来连接 `Redux Store` 和 `Component`，调用 `ConnectComponent` 可以创建一个 `ConnectStore`，并把 `ConnectStore` 添加到 `Component Options` 中。
+`ConnectComponent` 用来连接 `Component` 和 `Redux Store`，使用 `ConnectComponent` 可以创建一个 `ConnectStore`，然后把 `ConnectStore` 添加到 `Component Options` 中。
 
 #### 参数
 
-`ConnectComponent` 接收两个参数，均为可选。
+`ConnectComponent()` 接收两个参数，均为可选。
 
 1. `mapStateToStore?: (state) => Object`
 
 2. `mapDispatchToStore?: (dispatch) => Object`
 
-> mapStateToStore() 和 mapDispatchToStore() 的返回值会合并成一个 ConnectStore。
+> mapStateToStore() 和 mapDispatchToStore() 返回的 Object 会合并成一个 ConnectStore。
 
 #### 返回值
+
+`ConnectComponent()` 返回一个 `Connected` 函数
 
 `Connected: (options) => Object`
 
 #### `mapStateToStore?: (state) => Object`
 
-`mapStateToStore` 用来订阅 `Redux Store` 中的状态，接收一个参数 `state` 就是 `Redux Store` 中的状态，返回一个 `Object` 就是您需要订阅的状态。
+`mapStateToStore` 用来订阅 `Redux Store` 中的 `state`。
+
+`mapStateToStore` 调用时以 `state` 作为参数，返回的 `Object` 就是订阅的状态。
 
 > 如果 ConnectComponent() 没有传入 mapStateToStore，则不会订阅任何状态。
 
 ```typescript
-// 假如这是 Redux Store 中的状态
+// 如果这是 Redux Store 中的状态
 const state = {
   count: 0
 }
 
-// 订阅状态 count
+// 这样订阅 count 状态
 const mapStateToStore = (state) => {
   return {
     count: state.count
   }
 }
 
-// 订阅所有状态
+// 这样订阅所有状态
 const mapStateToStore = (state) => state;
 ```
 
 #### `mapDispatchToStore?: (dispatch) => Object`
 
-`mapDispatchToStore` 调用时以 `dispatch` 作为参数。通常情况下，你会利用这个 `dispatch` 来创建内部调用了 `dispatch()` 的新函数。
+`mapDispatchToStore` 用来包装 `Redux Store` 中的 `dispatch`。
+
+`mapDispatchToStore` 调用时以 `dispatch` 作为参数。
+
+通常情况下，你会利用这个 `dispatch` 来创建内部调用了 `dispatch` 的新函数。
 
 ```typescript
 const mapDispatchToStore = dispatch => {
@@ -368,21 +378,19 @@ const mapDispatchToStore = dispatch => {
 }
  ```
 
-> 传入了 mapDispatchToStore 后，将不再默认添加 dispatch 到 ConnectStore，因为 mapDispatchToStore 的默认值为 (dispatch) => ({ dispatch })，所有不传 mapDispatchToStore 的情况下 ConnectStore 中才会默认有一个 dispatch 函数。
-
-最终 `mapStateToStore` 和 `mapDispatchToStore` 的返回值会合并成一个 `ConnectStore`。
+> mapDispatchToStore 的默认值为 (dispatch) => ({ dispatch })，所以 ConnectComponent() 没有传入 mapDispatchToStore 的情况下 ConnectStore 中会默认存在一个 dispatch 函数。
 
 #### `Connected: (options) => Object`
 
 ##### 参数
 
-`options` ([Component Options](https://developers.weixin.qq.com/miniprogram/dev/reference/api/Component.html)) 创建自定义组件所需的参数
+`options` ([Component Options](https://developers.weixin.qq.com/miniprogram/dev/reference/api/Component.html)) 注册小程序中的一个页面所需的参数
 
 ##### 返回值
 
-`Object` ([Component Options](https://developers.weixin.qq.com/miniprogram/dev/reference/api/Component.html)) 一个新的创建自定义组件所需的参数
+`Object` ([Component Options](https://developers.weixin.qq.com/miniprogram/dev/reference/api/Component.html)) 一个新的注册小程序中的一个页面所需的参数
 
-`Connected` 用来把 `ConnectStore` 添加到 `Component Options` 中，使 `wxml` 中 `store.xxx` 和 `js` 中 `this.store.xxx` 能访问到 `ConnectStore` 中的状态和 `dispatch` 函数。
+`Connected` 用来把 `ConnectStore` 添加到 `Component Options` 中，使 `wxml` 中 `store.xxx` 和 `javascript` 中 `this.store.xxx` 能获取到 `ConnectStore` 中的状态和 `dispatch` 函数。
 
 ```tsx
 // Component Options
@@ -392,35 +400,31 @@ const options = {
   }
 }
 
-const mapStateToStore = (state) => {
-  return {
-    count: state.count
-  }
-}
+const mapStateToStore = state => ({
+  count: state.count
+});
 
-const mapDispatchToStore = dispatch => {
-  return {
-    increment: () => dispatch({ type: 'INCREMENT' }),
-    dispatch,
-  }
-}
+const mapDispatchToStore = dispatch => ({
+  increment: () => dispatch({ type: 'INCREMENT' }),
+  dispatch,
+});
 
 // 把 mapStateToStore 和 mapDispatchToStore 传给 ConnectComponent
 // 返回 Connected 函数
 const Connected = ConnectComponent(mapStateToStore, mapDispatchToStore);
 
 // 把 Component Options 传给 Connected
-// 返回一个含有 store 属性的新 Component Options
+// 返回一个新的 Component Options
 const componentOptions = Connected(options);
 
-// 然后把新的 Component Options 传给 Component
+// 然后把新的 Component Options 传入 Component
 Component(componentOptions);
 
 // 以上可以直接简写成以下形式
 Component(
   ConnectComponent(mapStateToStore, mapDispatchToStore)({
     attached: function() {
-      // this.store 就是 mapStateToStore 和 mapDispatchToStore 的返回值合并出的 ConnectStore
+      // this.store 获取到的就是 ConnectStore
       console.log(this.store.count);
       this.store.increment();
       this.store.dispatch({ type: 'INCREMENT' });
@@ -428,7 +432,7 @@ Component(
   })
 );
 
-// wxml 中 store.count 就是 ConnectStore 中的状态
+// wxml 中 store.count 获取的就是 ConnectStore 中的状态
 <view>{{store.count}}</view>
  ```
 
@@ -437,6 +441,8 @@ Component(
 获取小程序中唯一的 `Redux Store`
 
 ```typescript
+import { useStore } from "redux-miniprogram";
+
 const store = useStore();
 ```
 
@@ -445,6 +451,8 @@ const store = useStore();
 获取 `Redux Store` 中的状态
 
 ```typescript
+import { useState } from "redux-miniprogram";
+
 const state = useState();
 ```
 
@@ -453,5 +461,7 @@ const state = useState();
 获取 `Redux Store` 中的 dispatch 函数
 
 ```typescript
+import { useDispatch } from "redux-miniprogram";
+
 const dispatch = useDispatch();
 ```
