@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-30 13:37:39
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-04 19:32:44
+ * @LastEditTime: 2020-04-05 15:07:02
  */
 import { Store, Dispatch } from 'redux';
 import assert from './utils/assert';
@@ -10,15 +10,15 @@ import assert from './utils/assert';
 let store: Store;
 
 /**
- * 获取 store 对象
+ * 获取 Redux Store
  */
 export function useStore(): Store {
   if (store === undefined) {
-    store = getApp().store as Store;
+    store = getApp().store;
 
     assert(
       store === undefined,
-      '没有找到 store, 有可能 app.js 中 Provider 此时还没有执行 或者 已经执行但没有将 store 作为参数传入'
+      '没有找到 Redux Store, 可能 app.js 中 Provider 此时还没有执行 或者 已经执行但没有将 Redux Store 作为参数传入'
     );
   }
 
@@ -26,7 +26,7 @@ export function useStore(): Store {
 }
 
 /**
- * 获取 store 中的 state
+ * 获取 Redux Store 中的 state
  */
 export function useState(): AnyObject {
   if (store === undefined) {
@@ -37,7 +37,7 @@ export function useState(): AnyObject {
 }
 
 /**
- * 获取 store 中的 dispatch 函数
+ * 获取 Redux Store 中的 dispatch 函数
  */
 export function useDispatch(): Dispatch {
   if (store === undefined) {

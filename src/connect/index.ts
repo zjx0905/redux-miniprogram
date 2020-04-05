@@ -2,15 +2,9 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 12:37:19
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-05 01:11:25
+ * @LastEditTime: 2020-04-05 20:15:08
  */
-import {
-  MapStateToStore,
-  MapDispatchToStore,
-  ConnectType,
-  ConnectInstance,
-  ConnectOptions,
-} from '../types';
+import { MapStateToStore, MapDispatchToStore, ConnectType, Options } from '../types';
 import { useState, useDispatch } from '../hooks';
 import createCommitting from '../utils/createCommitting';
 import batchUpdate from '../utils/batchUpdate';
@@ -34,7 +28,7 @@ export default function connect(
   verifyPlainObject('mapStateToStore()', currentState);
   verifyPlainObject('mapDispatchToStore()', currentDispatch);
 
-  const instances: ConnectInstance[] = [];
+  const instances: Options[] = [];
   let unsubscribe: Function;
 
   function updater(state: AnyObject) {
@@ -58,8 +52,8 @@ export default function connect(
     });
   }
 
-  return function connected(options: ConnectInstance): ConnectOptions {
-    function load(this: ConnectInstance): void {
+  return function connected(options: Options): Options {
+    function load(this: Options): void {
       proxy(this, committing, currentState, currentDispatch);
 
       if (instances.length === 0) {
@@ -69,7 +63,7 @@ export default function connect(
       instances.push(this);
     }
 
-    function unload(this: ConnectInstance): void {
+    function unload(this: Options): void {
       const index = instances.indexOf(this);
 
       instances.splice(index, 1);
@@ -79,6 +73,6 @@ export default function connect(
       }
     }
 
-    return mixinLifetimes(type, mixinData({ ...options }, currentState), load, unload);
+    return mixinLifetimes(type, mixinData(options, currentState), load, unload);
   };
 }

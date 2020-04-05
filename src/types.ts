@@ -2,82 +2,35 @@
  * @Author: early-autumn
  * @Date: 2020-03-28 17:41:06
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-04 15:27:29
+ * @LastEditTime: 2020-04-05 20:05:56
  */
 import 'miniprogram-api-typings';
 import { Store, Dispatch } from 'redux';
 
-export declare type AppInstance = WechatMiniprogram.App.Instance<AnyObject>;
-
-export declare type AppOptions = WechatMiniprogram.App.Options<AnyObject>;
-
-export declare type PageInstance = WechatMiniprogram.Page.Instance<
-  WechatMiniprogram.Page.DataOption,
-  WechatMiniprogram.Page.CustomOption
->;
-
-export declare type PageOptions = WechatMiniprogram.Page.Options<
-  WechatMiniprogram.Page.DataOption,
-  WechatMiniprogram.Page.CustomOption
->;
-
-export declare type ComponentInstance = WechatMiniprogram.Component.Instance<
-  WechatMiniprogram.Component.DataOption,
-  WechatMiniprogram.Component.PropertyOption,
-  WechatMiniprogram.Component.MethodOption
->;
-
-export declare type ComponentOptions = WechatMiniprogram.Component.Options<
-  WechatMiniprogram.Component.DataOption,
-  WechatMiniprogram.Component.PropertyOption,
-  WechatMiniprogram.Component.MethodOption
->;
-
-export declare type ProviderInstance<T extends Store, A extends AppOptions> = ThisType<
-  { store: T & AppInstance } & A
->;
-
-export declare type ProviderOptions<T extends Store, A extends AppOptions> = {
-  store: T;
-} & A;
-
-export declare type ConnectInstance<
+export declare type Options<
   T extends AnyObject = AnyObject,
-  I extends AnyObject = AnyObject,
-  O extends AnyObject = AnyObject
-> = ThisType<{ store: T } & I> & {
-  store: T;
-  data: Record<string, any>;
-} & O;
+  Y extends AnyObject = AnyObject
+> = ThisType<{ store: T }> & Y;
 
-export declare type ConnectOptions<
-  T extends AnyObject = AnyObject,
-  A extends AnyObject = AnyObject
-> = {
-  store: T;
-} & A;
+export declare type ProviderOptions<T extends Store, Y extends AnyObject> = Options<
+  T,
+  WechatMiniprogram.App.Options<Y>
+>;
 
 export declare type ConnectType = 'page' | 'component';
 
-export declare type ConnectPageInstance<
+export declare type ConnectPageOptions<
   T extends AnyObject,
-  A extends PageOptions
-> = ConnectInstance<T, A, PageInstance>;
-
-export declare type ConnectPageOptions<T extends AnyObject, A extends PageOptions> = ConnectOptions<
-  T,
-  A
->;
-
-export declare type ConnectComponentInstance<
-  T extends AnyObject,
-  A extends ComponentOptions
-> = ConnectInstance<T, A, ComponentInstance>;
+  Y extends WechatMiniprogram.Page.DataOption,
+  P extends WechatMiniprogram.Page.CustomOption
+> = Options<T, WechatMiniprogram.Page.Options<Y, P>>;
 
 export declare type ConnectComponentOptions<
   T extends AnyObject,
-  A extends ComponentOptions
-> = ConnectOptions<T, A>;
+  Y extends WechatMiniprogram.Component.DataOption,
+  P extends WechatMiniprogram.Component.PropertyOption,
+  E extends WechatMiniprogram.Component.MethodOption
+> = Options<T, WechatMiniprogram.Component.Options<Y, P, E>>;
 
 export interface Committing {
   state: boolean;

@@ -2,11 +2,11 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 13:06:27
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-04 15:28:42
+ * @LastEditTime: 2020-04-05 22:07:27
  */
-import { ConnectType, ConnectOptions } from '../types';
+import { ConnectType, Options } from '../types';
 
-function paqeLifetimes(options: ConnectOptions, load: () => void, unload: () => void) {
+function paqeLifetimes(options: Options, load: () => void, unload: () => void) {
   const oldLoad = options.onLoad;
   const oldUnload = options.onUnload;
 
@@ -28,7 +28,7 @@ function paqeLifetimes(options: ConnectOptions, load: () => void, unload: () => 
   return options;
 }
 
-function componentLifetimes(options: ConnectOptions, load: () => void, unload: () => void) {
+function componentLifetimes(options: Options, load: () => void, unload: () => void) {
   const oldLoad = options.lifetimes?.attached ?? options.attached;
   const oldUnload = options.lifetimes?.detached ?? options.detached;
 
@@ -53,7 +53,7 @@ function componentLifetimes(options: ConnectOptions, load: () => void, unload: (
 
 export default function mixinLifetimes(
   type: ConnectType,
-  options: ConnectOptions,
+  options: Options,
   load: () => void,
   unload: () => void
 ) {

@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 21:06:40
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-04 21:47:30
+ * @LastEditTime: 2020-04-05 21:46:57
  */
 import { useStore, useState } from '../hooks';
 import createCommitting from './createCommitting';
@@ -41,9 +41,7 @@ function subscribe(listener: (state: AnyObject) => void) {
   return function unsubscribe(): void {
     const index = listeners.indexOf(listener);
 
-    if (index !== -1) {
-      listeners.splice(index, 1);
-    }
+    listeners.splice(index, 1);
   };
 }
 

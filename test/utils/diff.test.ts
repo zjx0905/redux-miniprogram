@@ -6,7 +6,7 @@
  */
 import diff from '../../src/utils/diff';
 
-describe('测试 utils/diff', () => {
+describe('测试 utils/diff.ts', () => {
   it('diff equal', () => {
     expect(diff({}, {})).toEqual({});
 
