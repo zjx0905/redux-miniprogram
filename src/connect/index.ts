@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 12:37:19
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-05 20:15:08
+ * @LastEditTime: 2020-04-05 22:45:48
  */
 import { MapStateToStore, MapDispatchToStore, ConnectType, Options } from '../types';
 import { useState, useDispatch } from '../hooks';
@@ -29,13 +29,9 @@ export default function connect(
   verifyPlainObject('mapDispatchToStore()', currentDispatch);
 
   const instances: Options[] = [];
-  let unsubscribe: Function;
+  let unsubscribe: Function | undefined;
 
   function updater(state: AnyObject) {
-    if (instances.length === 0) {
-      return;
-    }
-
     committing.commit((end) => {
       const nextState = mapStateToStore(state);
       const updateState = diff(currentState, nextState);
@@ -56,11 +52,11 @@ export default function connect(
     function load(this: Options): void {
       proxy(this, committing, currentState, currentDispatch);
 
-      if (instances.length === 0) {
+      instances.push(this);
+
+      if (unsubscribe === undefined) {
         unsubscribe = batchUpdate.subscribe(updater);
       }
-
-      instances.push(this);
     }
 
     function unload(this: Options): void {
@@ -68,8 +64,10 @@ export default function connect(
 
       instances.splice(index, 1);
 
-      if (instances.length === 0) {
+      if (instances.length === 0 && unsubscribe !== undefined) {
         unsubscribe();
+
+        unsubscribe = undefined;
       }
     }
 
