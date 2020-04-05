@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-04-05 15:13:23
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-05 22:34:47
+ * @LastEditTime: 2020-04-05 23:25:27
  */
 import { createStore } from 'redux';
 import ConnectPage from '../../src/core/Page';
@@ -110,6 +110,7 @@ describe('测试 core/Page.ts', () => {
             expect(pageOptions.data.store).toEqual({});
 
             if (pageOptions.onUnload) {
+              pageOptions.onUnload();
               pageOptions.onUnload();
             }
 

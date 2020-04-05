@@ -2,53 +2,63 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 13:06:27
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-05 22:07:27
+ * @LastEditTime: 2020-04-06 00:13:05
  */
 import { ConnectType, Options } from '../types';
 
-function paqeLifetimes(options: Options, load: () => void, unload: () => void) {
+function pageLifetimes(options: Options, load: () => void, unload: () => void) {
   const oldLoad = options.onLoad;
   const oldUnload = options.onUnload;
 
-  options.onLoad = function(query: any) {
+  function onLoad(this: Options, query: any) {
     load.call(this);
 
     if (oldLoad !== undefined) {
       oldLoad.call(this, query);
     }
-  };
-  options.onUnload = function() {
+  }
+
+  function onUnload(this: Options) {
     unload.call(this);
 
     if (oldUnload !== undefined) {
       oldUnload.call(this);
     }
-  };
+  }
 
-  return options;
+  return { ...options, onLoad, onUnload };
 }
 
 function componentLifetimes(options: Options, load: () => void, unload: () => void) {
   const oldLoad = options.lifetimes?.attached ?? options.attached;
   const oldUnload = options.lifetimes?.detached ?? options.detached;
 
-  options.lifetimes = options.lifetimes ?? {};
-  options.lifetimes.attached = options.attached = function() {
+  function attached(this: Options) {
     load.call(this);
 
     if (oldLoad !== undefined) {
       oldLoad.call(this);
     }
-  };
-  options.lifetimes.detached = options.detached = function() {
+  }
+
+  function detached(this: Options) {
     unload.call(this);
 
     if (oldUnload !== undefined) {
       oldUnload.call(this);
     }
-  };
+  }
 
-  return options;
+  return {
+    ...options,
+    attached,
+    detached,
+    lifetimes: {
+      ...(options.lifetimes ?? {}),
+      attached,
+      detached,
+    },
+  };
 }
 
 export default function mixinLifetimes(
@@ -58,7 +68,7 @@ export default function mixinLifetimes(
   unload: () => void
 ) {
   if (type === 'page') {
-    return paqeLifetimes(options, load, unload);
+    return pageLifetimes(options, load, unload);
   }
 
   return componentLifetimes(options, load, unload);
