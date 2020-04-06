@@ -1,0 +1,5 @@
+<!-- index.wxml -->
+<view>
+  <todo-input />
+  <todo-list />
+</view>

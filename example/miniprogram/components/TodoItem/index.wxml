@@ -1,0 +1,7 @@
+<!-- components/TodoItem/index.wxml -->
+<view class="todo-item">
+  <view class="{{item.state ? 'end' : ''}}">
+    <text>{{item.value}}</text>
+  </view>
+  <button bindtap="handleStateChange">{{item.state ?'设为未完成': '设为已完成' }}</button>
+</view>

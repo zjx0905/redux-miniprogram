@@ -1,0 +1,4 @@
+/* components/TodoInput/index.wxss */
+.input-value {
+  padding: 10px;
+}

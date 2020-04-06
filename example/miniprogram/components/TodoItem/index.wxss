@@ -1,0 +1,10 @@
+/* components/TodoItem/index.wxss */
+.todo-item {
+  width: 100%;
+  padding: 10px;
+}
+
+.end {
+  color: #999999;
+  text-decoration: line-through;
+}
