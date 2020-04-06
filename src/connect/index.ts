@@ -2,9 +2,9 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 12:37:19
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-06 15:15:01
+ * @LastEditTime: 2020-04-06 21:50:29
  */
-import { MapStateToStore, MapDispatchToStore, ConnectType, BaseOptions } from '../types';
+import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectType } from '../types';
 import { useState, useDispatch } from '../hooks';
 import createCommitting from '../utils/createCommitting';
 import batchUpdate from '../utils/batchUpdate';
@@ -28,7 +28,7 @@ export default function connect(
   verifyPlainObject('mapStateToStore()', currentState);
   verifyPlainObject('mapDispatchToStore()', currentDispatch);
 
-  const instances: BaseOptions[] = [];
+  const instances: AnyObject[] = [];
   let unsubscribe: Function | undefined;
 
   function updater(state: AnyObject) {
@@ -48,8 +48,8 @@ export default function connect(
     });
   }
 
-  return function connected(options: BaseOptions): BaseOptions {
-    function load(this: BaseOptions): void {
+  return function connected(options: AnyObject): AnyObject {
+    function load(this: AnyObject): void {
       proxy(this, committing, currentState, currentDispatch);
 
       instances.push(this);
@@ -59,7 +59,7 @@ export default function connect(
       }
     }
 
-    function unload(this: BaseOptions): void {
+    function unload(this: AnyObject): void {
       const index = instances.indexOf(this);
 
       instances.splice(index, 1);

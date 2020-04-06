@@ -2,9 +2,10 @@
  * @Author: early-autumn
  * @Date: 2020-03-30 13:37:39
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-06 14:56:33
+ * @LastEditTime: 2020-04-06 21:49:51
  */
 import { Store, Dispatch } from 'redux';
+import { AnyObject } from './types';
 import assert from './utils/assert';
 
 let store: Store;

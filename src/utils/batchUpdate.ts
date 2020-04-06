@@ -2,8 +2,9 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 21:06:40
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-05 21:46:57
+ * @LastEditTime: 2020-04-06 21:52:41
  */
+import { AnyObject } from '../types';
 import { useStore, useState } from '../hooks';
 import createCommitting from './createCommitting';
 

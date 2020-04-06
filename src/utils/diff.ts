@@ -2,8 +2,9 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 19:41:14
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-05 00:53:30
+ * @LastEditTime: 2020-04-06 21:52:53
  */
+import { AnyObject } from '../types';
 import shallowEqual from './shallowEqual';
 
 export default function diff(objA: AnyObject, objB: AnyObject): AnyObject {

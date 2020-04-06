@@ -70,7 +70,7 @@ import { Provider } from "redux-miniprogram";
 import store from "./store";
 
 App(
-  Provider(store, {
+  Provider(store)({
     onLaunch: function() {
       console.log(this.store); // 可以获取到 Redux Store
     }
@@ -85,23 +85,19 @@ App(
 import { ConnectPage } from "redux-miniprogram";
 import { saveCount } from '../../store';
 
-function mapStateToStore(state) {
-  return {
-    count: state.count
-  };
-}
+const mapStateToStore = (state) => ({
+  count: state.count
+});
 
-function mapDispatchToStore(dispatch) {
-  return {
-    saveCountDispatch(count) {
-      dispatch(saveCount(count));
-    }
-  };
-}
+const mapDispatchToStore = (dispatch) =>({
+  saveCountDispatch(count) {
+    dispatch(saveCount(count));
+  },
+  dispatch
+})
 
 Page(
-  ConnectPage(mapStateToStore, mapDispatchToStore)({
-    data: {},
+  ConnectPage(mapStateToStore, mapDispatchToStore)({ 
     onLoad: function() {
       // 使用了和 vue 一样的批量更新 多次修改会合并成一次
       this.store.dispatch(saveCount(10));
@@ -120,22 +116,19 @@ Page(
 );
 ```
 
-3. `Component` 中使用 `ConnectComponent` 连接 `Redux Store`。
+4. `Component` 中使用 `ConnectComponent` 连接 `Redux Store`。
 
 ```typescript
 // components/index/index.js
 import { ConnectComponent } from "redux-miniprogram";
 import { saveCount } from '../../store';
 
-function mapStateToStore(state) {
-  return {
-    count: state.count
-  };
-}
+const mapStateToStore = (state) => ({
+  count: state.count
+});
 
 Component(
-  ConnectComponent(mapStateToStore)({
-    data: {},
+  ConnectComponent(mapStateToStore)({ 
     attached: function() {
       ...
     },
@@ -143,7 +136,7 @@ Component(
 );
 ```
 
-4. `wxml` 中使用 `store.xxx` 获取 `ConnectStore` 中的状态。
+5. `wxml` 中使用 `store.xxx` 获取 `ConnectStore` 中的状态。
 
 ```html
 <view>{{store.count}}</view>
@@ -151,17 +144,27 @@ Component(
 
 ## API
 
-### `Provider(store, options)`
+### `Provider(store)(options)`
 
 `Provider` 用来把 `Redux Store` 添加到 `App Options` 中，使 `ConnectPage()` 和 `ConnectComponent()` 能访问到 `Redux Store`。
 
 #### 参数
 
-1. `store` ([Redux Store](https://redux.js.org/api/store)) 小程序中唯一的 `Redux Store`
-
-2. `options` ([App Options](https://developers.weixin.qq.com/miniprogram/dev/reference/api/App.html)) 注册小程序所需的参数
+`store` ([Redux Store](https://redux.js.org/api/store)) 小程序中唯一的 `Redux Store`
 
 #### 返回值
+
+`Provider()` 返回一个 `Provided` 函数
+
+`Provided: (options) => Object`
+
+#### `Provided: (options) => Object`
+
+##### 参数
+
+`options` ([App Options](https://developers.weixin.qq.com/miniprogram/dev/reference/api/App.html)) 注册小程序所需的参数
+
+##### 返回值
 
 `Object` ([App Options](https://developers.weixin.qq.com/miniprogram/dev/reference/api/App.html)) 一个新的注册小程序所需的参数
 
@@ -173,16 +176,20 @@ const options = {
   }
 }
 
-// 把 Redux Store 和 App Options 传给 Provider
+// 把 Redux Store 传给 Provider
+// 返回 Provided 函数
+const Provided = Provider(store);
+
+// 把 App Options 传给 Provided
 // 返回一个新的 App Options
-const appOptions = Provider(store, options);
+const appOptions = Provided(options);
 
 // 然后把新的 App Options 传入 App
 App(appOptions);
 
 // 以上可以直接简写成以下形式
 App(
-  Provider(store, {
+  Provider(store)({
     onLaunch: function() {
       ...
     }
@@ -190,7 +197,7 @@ App(
 );
 ```
 
-### `ConnectPage(mapStateToStore?, mapDispatchToStore?)`
+### `ConnectPage(mapStateToStore?, mapDispatchToStore?)(options)`
 
 `ConnectPage` 用来连接 `Page` 和 `Redux Store`，使用 `ConnectPage` 可以创建一个 `ConnectStore`，然后把 `ConnectStore` 添加到 `Page Options` 中。
 
@@ -313,7 +320,7 @@ Page(
 <view>{{store.count}}</view>
  ```
 
- ### `ConnectComponent(mapStateToStore?, mapDispatchToStore?)`
+ ### `ConnectComponent(mapStateToStore?, mapDispatchToStore?)(options)`
 
 `ConnectComponent` 用来连接 `Component` 和 `Redux Store`，使用 `ConnectComponent` 可以创建一个 `ConnectStore`，然后把 `ConnectStore` 添加到 `Component Options` 中。
 

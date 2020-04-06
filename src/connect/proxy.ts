@@ -2,9 +2,9 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 17:18:03
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-06 14:54:00
+ * @LastEditTime: 2020-04-06 21:51:27
  */
-import { Committing } from '../types';
+import { AnyObject, Committing } from '../types';
 import assert from '../utils/assert';
 
 const GET_ERROR_MESSAGE = `需要通过 this.store.xxx 获取 store 中的状态`;

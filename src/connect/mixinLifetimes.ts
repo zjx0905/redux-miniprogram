@@ -2,15 +2,15 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 13:06:27
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-06 15:15:27
+ * @LastEditTime: 2020-04-06 21:51:02
  */
-import { ConnectType, BaseOptions } from '../types';
+import { AnyObject, ConnectType } from '../types';
 
-function pageLifetimes(options: BaseOptions, load: () => void, unload: () => void) {
+function pageLifetimes(options: AnyObject, load: () => void, unload: () => void) {
   const oldLoad = options.onLoad;
   const oldUnload = options.onUnload;
 
-  function onLoad(this: BaseOptions, query: any) {
+  function onLoad(this: AnyObject, query: any) {
     load.call(this);
 
     if (oldLoad !== undefined) {
@@ -18,7 +18,7 @@ function pageLifetimes(options: BaseOptions, load: () => void, unload: () => voi
     }
   }
 
-  function onUnload(this: BaseOptions) {
+  function onUnload(this: AnyObject) {
     unload.call(this);
 
     if (oldUnload !== undefined) {
@@ -29,11 +29,11 @@ function pageLifetimes(options: BaseOptions, load: () => void, unload: () => voi
   return { ...options, onLoad, onUnload };
 }
 
-function componentLifetimes(options: BaseOptions, load: () => void, unload: () => void) {
+function componentLifetimes(options: AnyObject, load: () => void, unload: () => void) {
   const oldLoad = options.lifetimes?.attached ?? options.attached;
   const oldUnload = options.lifetimes?.detached ?? options.detached;
 
-  function attached(this: BaseOptions) {
+  function attached(this: AnyObject) {
     load.call(this);
 
     if (oldLoad !== undefined) {
@@ -41,7 +41,7 @@ function componentLifetimes(options: BaseOptions, load: () => void, unload: () =
     }
   }
 
-  function detached(this: BaseOptions) {
+  function detached(this: AnyObject) {
     unload.call(this);
 
     if (oldUnload !== undefined) {
@@ -63,7 +63,7 @@ function componentLifetimes(options: BaseOptions, load: () => void, unload: () =
 
 export default function mixinLifetimes(
   type: ConnectType,
-  options: BaseOptions,
+  options: AnyObject,
   load: () => void,
   unload: () => void
 ) {
