@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-28 17:41:06
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-06 22:32:19
+ * @LastEditTime: 2020-04-06 23:12:36
  */
 import 'miniprogram-api-typings';
 import { Store, Dispatch } from 'redux';
@@ -66,10 +66,10 @@ export interface Committing {
   end: () => void;
 }
 
-export interface MapStateToStore<T extends AnyObject = AnyObject> {
-  <S extends T>(state: S): AnyObject;
+export interface MapStateToStore {
+  (state: any): AnyObject;
 }
 
 export interface MapDispatchToStore<T extends Dispatch = Dispatch> {
-  <S extends T>(dispatch: S): AnyObject;
+  (dispatch: T): AnyObject;
 }
