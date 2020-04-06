@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-28 17:41:06
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-06 21:49:23
+ * @LastEditTime: 2020-04-06 22:32:19
  */
 import 'miniprogram-api-typings';
 import { Store, Dispatch } from 'redux';
@@ -34,7 +34,7 @@ export declare type ConnectPageOptions<
      *
      * 含有订阅的 state 以及 dispatch 函数
      *
-     * https://github.com/early-autumn/redux-miniprogram#connectpagemapstatetostore-mapdispatchtostore
+     * https://github.com/early-autumn/redux-miniprogram#connectpagemapstatetostore-mapdispatchtostoreoptions
      */
     store: TStore;
   } & WechatMiniprogram.Page.Instance<TData, TCustom>
@@ -53,7 +53,7 @@ export declare type ConnectComponentOptions<
      *
      * 含有订阅的 state 以及 dispatch 函数
      *
-     * https://github.com/early-autumn/redux-miniprogram#connectcomponentmapstatetostore-mapdispatchtostore
+     * https://github.com/early-autumn/redux-miniprogram#connectcomponentmapstatetostore-mapdispatchtostoreoptions
      */
     store: TStore;
   } & WechatMiniprogram.Component.Instance<TData, TProperty, TMethod>
