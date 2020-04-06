@@ -142,6 +142,8 @@ Component(
 <view>{{store.count}}</view>
 ```
 
+([redux-miniprogram-example](https://github.com/early-autumn/redux-miniprogram-example))
+
 ## API
 
 ### `Provider(store)(options)`
