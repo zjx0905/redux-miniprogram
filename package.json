@@ -1,7 +1,7 @@
 {
   "name": "redux-miniprogram",
-  "version": "1.1.1",
-  "description": "微信小程序 redux 绑定工具，使用体验类似 react-redux。",
+  "version": "1.1.2",
+  "description": "微信小程序 redux 绑定工具。",
   "main": "package/index.js",
   "miniprogram": "package",
   "types": "types/index.d.ts",

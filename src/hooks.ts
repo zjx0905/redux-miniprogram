@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-30 13:37:39
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-05 15:07:02
+ * @LastEditTime: 2020-04-06 14:56:33
  */
 import { Store, Dispatch } from 'redux';
 import assert from './utils/assert';
@@ -18,7 +18,8 @@ export function useStore(): Store {
 
     assert(
       store === undefined,
-      '没有找到 Redux Store, 可能 app.js 中 Provider 此时还没有执行 或者 已经执行但没有将 Redux Store 作为参数传入'
+      `没有找到 Redux Store
+      可能 app.js 中 Provider 此时还没有执行 或者 已经执行但没有将 Redux Store 作为参数传入`
     );
   }
 

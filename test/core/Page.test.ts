@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-04-05 15:13:23
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-05 23:25:27
+ * @LastEditTime: 2020-04-06 14:54:09
  */
 import { createStore } from 'redux';
 import ConnectPage from '../../src/core/Page';
@@ -107,7 +107,7 @@ describe('测试 core/Page.ts', () => {
           this.store.dispatch({ type: 'COUNT', payload: 20 });
 
           Promise.resolve().then(() => {
-            expect(pageOptions.data.store).toEqual({});
+            expect(pageOptions.data.store).toBe('需要通过 this.store.xxx 获取 store 中的状态');
 
             if (pageOptions.onUnload) {
               pageOptions.onUnload();

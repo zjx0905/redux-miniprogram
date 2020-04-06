@@ -2,15 +2,15 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 13:06:27
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-06 00:13:05
+ * @LastEditTime: 2020-04-06 15:15:27
  */
-import { ConnectType, Options } from '../types';
+import { ConnectType, BaseOptions } from '../types';
 
-function pageLifetimes(options: Options, load: () => void, unload: () => void) {
+function pageLifetimes(options: BaseOptions, load: () => void, unload: () => void) {
   const oldLoad = options.onLoad;
   const oldUnload = options.onUnload;
 
-  function onLoad(this: Options, query: any) {
+  function onLoad(this: BaseOptions, query: any) {
     load.call(this);
 
     if (oldLoad !== undefined) {
@@ -18,7 +18,7 @@ function pageLifetimes(options: Options, load: () => void, unload: () => void) {
     }
   }
 
-  function onUnload(this: Options) {
+  function onUnload(this: BaseOptions) {
     unload.call(this);
 
     if (oldUnload !== undefined) {
@@ -29,11 +29,11 @@ function pageLifetimes(options: Options, load: () => void, unload: () => void) {
   return { ...options, onLoad, onUnload };
 }
 
-function componentLifetimes(options: Options, load: () => void, unload: () => void) {
+function componentLifetimes(options: BaseOptions, load: () => void, unload: () => void) {
   const oldLoad = options.lifetimes?.attached ?? options.attached;
   const oldUnload = options.lifetimes?.detached ?? options.detached;
 
-  function attached(this: Options) {
+  function attached(this: BaseOptions) {
     load.call(this);
 
     if (oldLoad !== undefined) {
@@ -41,7 +41,7 @@ function componentLifetimes(options: Options, load: () => void, unload: () => vo
     }
   }
 
-  function detached(this: Options) {
+  function detached(this: BaseOptions) {
     unload.call(this);
 
     if (oldUnload !== undefined) {
@@ -63,7 +63,7 @@ function componentLifetimes(options: Options, load: () => void, unload: () => vo
 
 export default function mixinLifetimes(
   type: ConnectType,
-  options: Options,
+  options: BaseOptions,
   load: () => void,
   unload: () => void
 ) {
