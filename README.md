@@ -142,7 +142,7 @@ Component(
 <view>{{store.count}}</view>
 ```
 
-([redux-miniprogram-example](https://github.com/early-autumn/redux-miniprogram-example))
+[typescript示例项目 redux-miniprogram-example](https://github.com/early-autumn/redux-miniprogram-example)
 
 ## API
 
