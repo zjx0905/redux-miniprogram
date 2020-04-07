@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 12:37:19
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-06 21:50:29
+ * @LastEditTime: 2020-04-07 18:01:48
  */
 import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectType } from '../types';
 import { useState, useDispatch } from '../hooks';
@@ -11,10 +11,13 @@ import batchUpdate from '../utils/batchUpdate';
 import verifyPlainObject from '../utils/verifyPlainObject';
 import diff from '../utils/diff';
 import isEmptyObject from '../utils/isEmptyObject';
-import { mapStateToStoreDefault, mapDispatchToStoreDefault } from './default';
-import proxy from './proxy';
-import mixinData from './mixinData';
+import proxyConnectStore from './proxyConnectStore';
+import mixinInitData from './mixinInitData';
 import mixinLifetimes from './mixinLifetimes';
+
+const mapStateToStoreDefault: MapStateToStore = () => ({});
+
+const mapDispatchToStoreDefault: MapDispatchToStore = (dispatch) => ({ dispatch });
 
 export default function connect(
   type: ConnectType,
@@ -23,9 +26,11 @@ export default function connect(
 ) {
   const committing = createCommitting();
   const currentState = mapStateToStore(useState());
-  const currentDispatch = mapDispatchToStore(useDispatch());
 
   verifyPlainObject('mapStateToStore()', currentState);
+
+  const currentDispatch = mapDispatchToStore(useDispatch());
+
   verifyPlainObject('mapDispatchToStore()', currentDispatch);
 
   const instances: AnyObject[] = [];
@@ -48,29 +53,29 @@ export default function connect(
     });
   }
 
+  function load(this: AnyObject): void {
+    proxyConnectStore(this, committing, currentState, currentDispatch);
+
+    instances.push(this);
+
+    if (unsubscribe === undefined) {
+      unsubscribe = batchUpdate.subscribe(updater);
+    }
+  }
+
+  function unload(this: AnyObject): void {
+    const index = instances.indexOf(this);
+
+    instances.splice(index, 1);
+
+    if (instances.length === 0 && unsubscribe !== undefined) {
+      unsubscribe();
+
+      unsubscribe = undefined;
+    }
+  }
+
   return function connected(options: AnyObject): AnyObject {
-    function load(this: AnyObject): void {
-      proxy(this, committing, currentState, currentDispatch);
-
-      instances.push(this);
-
-      if (unsubscribe === undefined) {
-        unsubscribe = batchUpdate.subscribe(updater);
-      }
-    }
-
-    function unload(this: AnyObject): void {
-      const index = instances.indexOf(this);
-
-      instances.splice(index, 1);
-
-      if (instances.length === 0 && unsubscribe !== undefined) {
-        unsubscribe();
-
-        unsubscribe = undefined;
-      }
-    }
-
-    return mixinLifetimes(type, mixinData(options, currentState), load, unload);
+    return mixinLifetimes(type, mixinInitData(options, currentState), load, unload);
   };
 }

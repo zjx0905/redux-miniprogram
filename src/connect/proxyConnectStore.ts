@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 17:18:03
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-06 21:51:27
+ * @LastEditTime: 2020-04-07 17:58:09
  */
 import { AnyObject, Committing } from '../types';
 import assert from '../utils/assert';
@@ -10,7 +10,7 @@ import assert from '../utils/assert';
 const GET_ERROR_MESSAGE = `需要通过 this.store.xxx 获取 store 中的状态`;
 const SET_ERROR_MESSAGE = `需要通过 dispatch 修改 store 中的状态`;
 
-export default function defineProperty(
+export default function proxyStore(
   instance: AnyObject,
   committing: Committing,
   currentState: AnyObject,

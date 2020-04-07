@@ -6,7 +6,7 @@
  */
 import { AnyObject } from '../types';
 
-export default function mixinData(options: AnyObject, state: AnyObject): AnyObject {
+export default function mixinInitData(options: AnyObject, state: AnyObject): AnyObject {
   return {
     ...options,
     data: { ...(options.data ?? {}), store: state },
