@@ -1,3 +1,0 @@
-<!-- components/TodoInput/index.wxml -->
-<input class="input-value" value="{{store.inputValue}}" placeholder="请输入" bindinput="handleInputValueChange" />
-<button bindtap="handleAddTodo">添加</button>

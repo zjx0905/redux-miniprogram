@@ -1,6 +1,0 @@
-<!-- components/TodoList/index.wxml -->
-<view>
-  <block wx:for="{{store.todoList}}" wx:key="id">
-    <todo-item item="{{item}}" />
-  </block>
-</view>

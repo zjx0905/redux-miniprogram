@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "todo-input": "/components/TodoInput/index",
-    "todo-list": "/components/TodoList/index"
-  }
-}
