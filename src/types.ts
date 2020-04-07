@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-28 17:41:06
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-07 17:31:13
+ * @LastEditTime: 2020-04-07 21:37:54
  */
 import 'miniprogram-api-typings';
 import { Store, Dispatch } from 'redux';
@@ -62,8 +62,17 @@ export declare type ConnectComponentOptions<
   WechatMiniprogram.Component.Options<TData, TProperty, TMethod>;
 
 export interface Committing {
+  /**
+   * 当前状态
+   */
   state: boolean;
-  commit: (handler: (end: () => void) => Promise<void> | void) => void;
+  /**
+   * 提交中
+   */
+  commit: (handler: () => void) => void;
+  /**
+   * 提交结束
+   */
   end: () => void;
 }
 

@@ -2,30 +2,30 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 13:06:27
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-07 18:46:28
+ * @LastEditTime: 2020-04-07 21:01:01
  */
 import { AnyObject, ConnectType } from '../types';
 
 /**
- * 执行生命周期逻辑
+ * 执行新增逻辑和原始生命周期函数
  *
  * @param this 当前实例
  * @param cur 新增逻辑
- * @param old 原始逻辑
+ * @param old 原始生命周期函数
  * @param arg 额外的参数数组
  */
 function executeLifetime(this: AnyObject, cur: Function, old: Function, arg: any[]) {
   cur.call(this, ...arg);
 
   if (old !== undefined) {
-    old.call(this, ...arg);
+    return old.call(this, ...arg);
   }
 }
 
 /**
- * 混合新增逻辑和原始逻辑
+ * 混合新增逻辑和原始生命周期函数
  *
- * 创建新的函数替换原始函数
+ * 创建新的生命周期函数替换原始生命周期函数
  *
  * @param options Page Opatins
  * @param load 新增加载逻辑
@@ -33,20 +33,20 @@ function executeLifetime(this: AnyObject, cur: Function, old: Function, arg: any
  */
 function pageLifetimes(options: AnyObject, load: Function, unload: Function) {
   function onLoad(this: AnyObject, ...arg: any[]) {
-    executeLifetime.call(this, load, options.onLoad, arg);
+    return executeLifetime.call(this, load, options.onLoad, arg);
   }
 
   function onUnload(this: AnyObject, ...arg: any[]) {
-    executeLifetime.call(this, unload, options.onUnload, arg);
+    return executeLifetime.call(this, unload, options.onUnload, arg);
   }
 
   return { ...options, onLoad, onUnload };
 }
 
 /**
- * 混合新增逻辑和原始逻辑
+ * 混合新增逻辑和原始生命周期函数
  *
- * 创建新的函数替换原始函数
+ * 创建新的生命周期函数替换原始生命周期函数
  *
  * @param options Component Opatins
  * @param load 新增加载逻辑
@@ -54,11 +54,11 @@ function pageLifetimes(options: AnyObject, load: Function, unload: Function) {
  */
 function componentLifetimes(options: AnyObject, load: Function, unload: Function) {
   function attached(this: AnyObject, ...arg: any[]) {
-    executeLifetime.call(this, load, options.lifetimes?.attached ?? options.attached, arg);
+    return executeLifetime.call(this, load, options.lifetimes?.attached ?? options.attached, arg);
   }
 
   function detached(this: AnyObject, ...arg: any[]) {
-    executeLifetime.call(this, unload, options.lifetimes?.detached ?? options.detached, arg);
+    return executeLifetime.call(this, unload, options.lifetimes?.detached ?? options.detached, arg);
   }
 
   return {

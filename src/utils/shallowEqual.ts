@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-30 19:21:29
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-03-30 19:21:48
+ * @LastEditTime: 2020-04-07 21:35:10
  */
 function is(x: any, y: any) {
   if (x === y) {
@@ -12,6 +12,12 @@ function is(x: any, y: any) {
   }
 }
 
+/**
+ * 浅相等
+ *
+ * @param objA 第一个值
+ * @param objB 第二个值
+ */
 export default function shallowEqual(objA: any, objB: any) {
   if (is(objA, objB)) return true;
 
