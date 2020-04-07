@@ -2,11 +2,11 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 12:37:19
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-07 21:44:29
+ * @LastEditTime: 2020-04-07 23:36:37
  */
 import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectType } from '../types';
 import { useState, useDispatch } from '../api/hooks';
-import createCommitting from '../utils/createCommitting';
+import createCommit from '../utils/createCommit';
 import batchUpdate from '../utils/batchUpdate';
 import verifyPlainObject from '../utils/verifyPlainObject';
 import diff from '../utils/diff';
@@ -32,7 +32,7 @@ export default function connect(
   mapDispatchToStore: MapDispatchToStore = mapDispatchToStoreDefault
 ) {
   return function connected(options: AnyObject): AnyObject {
-    const committing = createCommitting();
+    const commit = createCommit();
     const currentState = mapStateToStore(useState());
 
     verifyPlainObject('mapStateToStore()', currentState);
@@ -58,7 +58,7 @@ export default function connect(
      * @param state Redux Store
      */
     function updater(state: AnyObject) {
-      committing.commit(() => {
+      commit.run(() => {
         const nextState = mapStateToStore(state);
         const updateState = diff(currentState, nextState);
 
@@ -69,8 +69,6 @@ export default function connect(
         Object.assign(currentState, nextState);
 
         instances.forEach((instance) => instance.setData(updateState));
-
-        committing.end();
       });
     }
 
@@ -80,7 +78,7 @@ export default function connect(
      * @param this 当前实例
      */
     function load(this: AnyObject): void {
-      proxyConnectStore(this, committing, currentState, currentDispatch);
+      proxyConnectStore(this, commit, currentState, currentDispatch);
 
       // 加载时添加当前实例到实例集合
       instances.push(this);

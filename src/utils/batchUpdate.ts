@@ -2,13 +2,13 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 21:06:40
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-07 21:37:05
+ * @LastEditTime: 2020-04-07 23:34:42
  */
 import { AnyObject } from '../types';
 import { useStore, useState } from '../api/hooks';
-import createCommitting from './createCommitting';
+import createCommit from './createCommit';
 
-const committing = createCommitting();
+const commit = createCommit('async');
 /**
  * 侦听器集合
  */
@@ -22,18 +22,10 @@ let subscribed = false;
  * 异步批量更新
  */
 function updating(): void {
-  if (committing.state === true) {
-    return;
-  }
+  commit.run(() => {
+    const state = useState();
 
-  committing.commit(() => {
-    Promise.resolve().then(() => {
-      const state = useState();
-
-      listeners.forEach((listener) => listener(state));
-
-      committing.end();
-    });
+    listeners.forEach((listener) => listener(state));
   });
 }
 
