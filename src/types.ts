@@ -2,24 +2,24 @@
  * @Author: early-autumn
  * @Date: 2020-03-28 17:41:06
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-06 23:12:36
+ * @LastEditTime: 2020-04-07 17:31:13
  */
 import 'miniprogram-api-typings';
 import { Store, Dispatch } from 'redux';
 
 export declare type AnyObject = Record<string, any>;
 
-export declare type ProviderOptions<TStore extends Store, TObject extends AnyObject> = ThisType<
+export declare type ProviderOptions<TStore extends Store, TAnyObject extends AnyObject> = ThisType<
   {
     /**
      * 小程序中唯一的 Redux Store
      *
-     * https://redux.js.org/api/store
+     * [Redux Store](https://redux.js.org/api/store)
      */
     store: TStore;
-  } & WechatMiniprogram.App.Instance<TObject>
+  } & WechatMiniprogram.App.Instance<TAnyObject>
 > &
-  WechatMiniprogram.App.Options<TObject>;
+  WechatMiniprogram.App.Options<TAnyObject>;
 
 export declare type ConnectType = 'page' | 'component';
 
@@ -34,7 +34,8 @@ export declare type ConnectPageOptions<
      *
      * 含有订阅的 state 以及 dispatch 函数
      *
-     * https://github.com/early-autumn/redux-miniprogram#connectpagemapstatetostore-mapdispatchtostoreoptions
+     * [查看文档](https://github.com/early-autumn/redux-miniprogram#%E5%8F%82%E6%95%B0-2)
+     *
      */
     store: TStore;
   } & WechatMiniprogram.Page.Instance<TData, TCustom>
@@ -53,7 +54,7 @@ export declare type ConnectComponentOptions<
      *
      * 含有订阅的 state 以及 dispatch 函数
      *
-     * https://github.com/early-autumn/redux-miniprogram#connectcomponentmapstatetostore-mapdispatchtostoreoptions
+     * [查看文档](https://github.com/early-autumn/redux-miniprogram#%E5%8F%82%E6%95%B0-4)
      */
     store: TStore;
   } & WechatMiniprogram.Component.Instance<TData, TProperty, TMethod>

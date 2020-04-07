@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-30 13:37:39
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-06 21:49:51
+ * @LastEditTime: 2020-04-07 17:39:13
  */
 import { Store, Dispatch } from 'redux';
 import { AnyObject } from './types';
@@ -12,6 +12,8 @@ let store: Store;
 
 /**
  * 获取 Redux Store
+ *
+ * [查看文档](https://github.com/early-autumn/redux-miniprogram#usestore)
  */
 export function useStore(): Store {
   if (store === undefined) {
@@ -29,6 +31,8 @@ export function useStore(): Store {
 
 /**
  * 获取 Redux Store 中的 state
+ *
+ * [查看文档](https://github.com/early-autumn/redux-miniprogram#usestate)
  */
 export function useState(): AnyObject {
   if (store === undefined) {
@@ -40,6 +44,8 @@ export function useState(): AnyObject {
 
 /**
  * 获取 Redux Store 中的 dispatch 函数
+ *
+ * [查看文档](https://github.com/early-autumn/redux-miniprogram#usedispatch)
  */
 export function useDispatch(): Dispatch {
   if (store === undefined) {

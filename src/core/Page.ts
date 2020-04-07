@@ -2,14 +2,15 @@
  * @Author: early-autumn
  * @Date: 2020-03-25 14:54:52
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-06 21:54:24
+ * @LastEditTime: 2020-04-07 17:34:23
  */
 import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectPageOptions } from '../types';
 import connect from '../connect';
 
 /**
- * @param mapStateToStore 订阅 state
- * @param mapDispatchToStore 包装 dispatch
+ * Page 连接 Redux Store
+ *
+ * [查看文档](https://github.com/early-autumn/redux-miniprogram#connectpagemapstatetostore-mapdispatchtostoreoptions)
  */
 export default function ConnectPage<TStore extends AnyObject>(
   mapStateToStore?: MapStateToStore,

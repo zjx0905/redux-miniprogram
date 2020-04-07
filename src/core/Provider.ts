@@ -2,20 +2,20 @@
  * @Author: early-autumn
  * @Date: 2020-03-25 14:59:14
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-06 21:51:52
+ * @LastEditTime: 2020-04-07 17:37:27
  */
 import { Store } from 'redux';
 import { AnyObject, ProviderOptions } from '../types';
 
 /**
+ * 提供小程序唯一的 Redux Store
  *
- * @param store Redux Store
- * @param options App Options
+ * [查看文档](https://github.com/early-autumn/redux-miniprogram#providerstoreoptions)
  */
 export default function Provider<TStore extends Store>(store: TStore) {
-  return function Provided<TObject extends AnyObject>(
-    options: ProviderOptions<TStore, TObject>
-  ): ProviderOptions<TStore, TObject> {
+  return function Provided<TAnyObject extends AnyObject>(
+    options: ProviderOptions<TStore, TAnyObject>
+  ): ProviderOptions<TStore, TAnyObject> {
     return { ...options, store };
   };
 }
