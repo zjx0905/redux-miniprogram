@@ -2,15 +2,15 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 12:37:19
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-07 23:36:37
+ * @LastEditTime: 2020-04-08 00:23:06
  */
 import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectType } from '../types';
 import { useState, useDispatch } from '../api/hooks';
-import createCommit from '../utils/createCommit';
-import batchUpdate from '../utils/batchUpdate';
-import verifyPlainObject from '../utils/verifyPlainObject';
 import diff from '../utils/diff';
 import isEmptyObject from '../utils/isEmptyObject';
+import verifyPlainObject from '../utils/verifyPlainObject';
+import createCommit from './createCommit';
+import batchUpdate from './batchUpdate';
 import proxyConnectStore from './proxyConnectStore';
 import mixinInitData from './mixinInitData';
 import mixinLifetimes from './mixinLifetimes';

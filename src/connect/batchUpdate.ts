@@ -2,12 +2,15 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 21:06:40
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-07 23:34:42
+ * @LastEditTime: 2020-04-08 00:22:25
  */
 import { AnyObject } from '../types';
 import { useStore, useState } from '../api/hooks';
 import createCommit from './createCommit';
 
+/**
+ * 异步提交
+ */
 const commit = createCommit('async');
 /**
  * 侦听器集合
@@ -19,7 +22,7 @@ const listeners: ((state: AnyObject) => void)[] = [];
 let subscribed = false;
 
 /**
- * 异步批量更新
+ * 异步更新
  */
 function updating(): void {
   commit.run(() => {
