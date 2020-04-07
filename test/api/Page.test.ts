@@ -5,7 +5,7 @@
  * @LastEditTime: 2020-04-06 14:54:09
  */
 import { createStore } from 'redux';
-import ConnectPage from '../../src/core/Page';
+import ConnectPage from '../../src/api/Page';
 
 declare global {
   namespace NodeJS {

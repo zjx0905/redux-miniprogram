@@ -2,11 +2,11 @@
  * @Author: early-autumn
  * @Date: 2020-04-05 13:20:18
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-05 14:30:34
+ * @LastEditTime: 2020-04-07 19:54:59
  */
 
 import { createStore } from 'redux';
-import { useStore, useState, useDispatch } from '../src/hooks';
+import { useStore, useState, useDispatch } from '../../src/api/hooks';
 
 declare global {
   namespace NodeJS {

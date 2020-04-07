@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-25 14:54:52
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-07 17:35:01
+ * @LastEditTime: 2020-04-07 19:50:38
  */
 import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectComponentOptions } from '../types';
 import connect from '../connect';

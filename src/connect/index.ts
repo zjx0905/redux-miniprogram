@@ -2,10 +2,10 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 12:37:19
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-07 18:01:48
+ * @LastEditTime: 2020-04-07 19:49:20
  */
 import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectType } from '../types';
-import { useState, useDispatch } from '../hooks';
+import { useState, useDispatch } from '../api/hooks';
 import createCommitting from '../utils/createCommitting';
 import batchUpdate from '../utils/batchUpdate';
 import verifyPlainObject from '../utils/verifyPlainObject';

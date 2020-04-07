@@ -2,10 +2,10 @@
  * @Author: early-autumn
  * @Date: 2020-04-05 19:43:52
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-06 00:18:22
+ * @LastEditTime: 2020-04-07 19:47:57
  */
 import { createStore } from 'redux';
-import ConnectComponent from '../../src/core/Component';
+import ConnectComponent from '../../src/api/Component';
 
 declare global {
   namespace NodeJS {

@@ -2,10 +2,10 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 21:06:40
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-06 21:52:41
+ * @LastEditTime: 2020-04-07 19:55:35
  */
 import { AnyObject } from '../types';
-import { useStore, useState } from '../hooks';
+import { useStore, useState } from '../api/hooks';
 import createCommitting from './createCommitting';
 
 const committing = createCommitting();
