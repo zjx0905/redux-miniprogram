@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 17:29:05
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-07 23:44:48
+ * @LastEditTime: 2020-04-08 00:00:55
  */
 import { Commit } from '../types';
 
@@ -38,6 +38,6 @@ class CommitClass implements Commit {
 /**
  * 创建提交
  */
-export default function createCommit(task: 'sync' | 'async' = 'sync'): Commit {
+export default function createCommit(task?: 'sync' | 'async'): Commit {
   return new CommitClass(task);
 }

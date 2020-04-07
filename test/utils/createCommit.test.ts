@@ -2,13 +2,13 @@
  * @Author: early-autumn
  * @Date: 2020-04-05 21:34:56
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-07 23:51:52
+ * @LastEditTime: 2020-04-07 23:59:51
  */
 import createCommit from '../../src/utils/createCommit';
 
 describe('测试 utils/createCommit.ts', () => {
   it('测试 createCommit 同步', () => {
-    const commit = createCommit();
+    const commit = createCommit('sync');
 
     // state 初始应该为 false
     expect(commit.state).toBeFalsy();
