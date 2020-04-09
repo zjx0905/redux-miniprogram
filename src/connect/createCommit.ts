@@ -2,29 +2,39 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 17:29:05
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-08 00:00:55
+ * @LastEditTime: 2020-04-09 09:47:51
  */
 import { Commit } from '../types';
 
 class CommitClass implements Commit {
-  task: 'sync' | 'async' = 'sync';
-  state = false;
+  task: 'sync' | 'async';
+
+  state: boolean;
 
   constructor(task: 'sync' | 'async' = 'sync') {
     this.task = task;
+    this.state = false;
+  }
+
+  getState() {
+    return this.state;
+  }
+
+  setState(state: boolean) {
+    this.state = state;
   }
 
   run(handler: () => void) {
-    if (this.state === true) {
+    if (this.getState() === true) {
       return;
     }
 
-    this.state = true;
+    this.setState(true);
 
     const execute = () => {
       handler();
 
-      this.state = false;
+      this.setState(false);
     };
 
     if (this.task === 'sync') {

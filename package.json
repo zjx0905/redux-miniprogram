@@ -1,6 +1,6 @@
 {
   "name": "redux-miniprogram",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "微信小程序 redux 绑定工具。",
   "main": "package/index.js",
   "miniprogram": "package",

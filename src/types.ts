@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-28 17:41:06
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-07 23:50:51
+ * @LastEditTime: 2020-04-09 09:46:32
  */
 import 'miniprogram-api-typings';
 import { Store, Dispatch } from 'redux';
@@ -70,6 +70,14 @@ export interface Commit {
    * 当前状态
    */
   state: boolean;
+  /**
+   * 获取当前状态
+   */
+  getState: () => boolean;
+  /**
+   * 设置当前状态
+   */
+  setState: (state: boolean) => void;
   /**
    * 运行
    */

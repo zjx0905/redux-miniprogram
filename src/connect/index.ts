@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 12:37:19
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-08 00:23:06
+ * @LastEditTime: 2020-04-09 09:52:49
  */
 import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectType } from '../types';
 import { useState, useDispatch } from '../api/hooks';
@@ -32,11 +32,25 @@ export default function connect(
   mapDispatchToStore: MapDispatchToStore = mapDispatchToStoreDefault
 ) {
   return function connected(options: AnyObject): AnyObject {
+    /**
+     * 同步提交
+     */
     const commit = createCommit();
+
+    /**
+     * 当前组件订阅的状态
+     *
+     * 在多个实例间共享
+     */
     const currentState = mapStateToStore(useState());
 
     verifyPlainObject('mapStateToStore()', currentState);
 
+    /**
+     * 当前组件包装的 dispatch
+     *
+     * 在多个实例间共享
+     */
     const currentDispatch = mapDispatchToStore(useDispatch());
 
     verifyPlainObject('mapDispatchToStore()', currentDispatch);
@@ -45,6 +59,7 @@ export default function connect(
      * 当前被创建的实例集合
      */
     const instances: AnyObject[] = [];
+
     /**
      * 取消订阅批量更新的函数
      */
