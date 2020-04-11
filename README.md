@@ -334,7 +334,7 @@ App(
 
 2. `mapDispatchToStore?: (dispatch) => Object`
 
-> 最终 mapStateToStore() 返回的 state 和 pureState 和 mapDispatchToStore() 返回的 Object 会合并成一个 Connect Store
+> 最终 mapStateToStore() 返回的 state,pureState 和 mapDispatchToStore() 返回的 Object 会合并成一个 Connect Store
 
 #### 返回值
 
@@ -346,7 +346,7 @@ App(
 
 `mapStateToStore` 用来订阅 `Redux Store` 中的 `state` 
 
-`mapStateToStore` 调用时以 `state` 作为参数，返回的 `{ state?: Object, pureState?: Object }` 就是订阅的状态, `state` 是订阅的会参与渲染的 `state`, `pureState` 是订阅的不会会参与渲染的 `state`
+`mapStateToStore` 调用时以 `state` 作为参数，返回 `{ state?: Object, pureState?: Object }`, 返回的 `state` 会参与渲染, 返回的 `pureState` 不会参与渲染
 
 > 如果 ConnectPage() 没有传入 mapStateToStore，则不会订阅任何状态。
 
@@ -357,7 +357,7 @@ const state = {
   name: 'test'
 }
 
-// 订阅 state 分两种
+// 订阅的 state 分两种类型
 const mapStateToStore = (state) => ({
   // 普通 state, 会参与渲染
   state: {
@@ -368,9 +368,6 @@ const mapStateToStore = (state) => ({
     name: state.name
   }
 })
-
-// 这样订阅所有状态
-const mapStateToStore = (state) => state;
 ```
 
 #### `mapDispatchToStore?: (dispatch) => Object`
@@ -464,7 +461,7 @@ Page(
 
 2. `mapDispatchToStore?: (dispatch) => Object`
 
-> 最终 mapStateToStore() 返回的 state 和 pureState 和 mapDispatchToStore() 返回的 Object 会合并成一个 Connect Store
+> 最终 mapStateToStore() 返回的 state,pureState 和 mapDispatchToStore() 返回的 Object 会合并成一个 Connect Store
 
 #### 返回值
 
@@ -476,7 +473,7 @@ Page(
 
 `mapStateToStore` 用来订阅 `Redux Store` 中的 `state` 
 
-`mapStateToStore` 调用时以 `state` 作为参数，返回的 `{ state?: Object, pureState?: Object }` 就是订阅的状态, `state` 是订阅的会参与渲染的 `state`, `pureState` 是订阅的不会会参与渲染的 `state` 
+`mapStateToStore` 调用时以 `state` 作为参数，返回 `{ state?: Object, pureState?: Object }`, 返回的 `state` 会参与渲染, 返回的 `pureState` 不会参与渲染
 
 > 如果 ConnectComponent() 没有传入 mapStateToStore，则不会订阅任何状态。
 
@@ -487,7 +484,7 @@ const state = {
   name: 'test'
 }
 
-// 订阅 state 分两种
+// 订阅的 state 分两种类型
 const mapStateToStore = (state) => ({
   // 普通 state, 会参与渲染
   state: {
@@ -498,9 +495,6 @@ const mapStateToStore = (state) => ({
     name: state.name
   }
 })
-
-// 这样订阅所有状态
-const mapStateToStore = (state) => state;
 ```
 
 #### `mapDispatchToStore?: (dispatch) => Object`
