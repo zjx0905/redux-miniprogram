@@ -79,11 +79,11 @@ describe('测试 core/Page.ts', () => {
     expect(ConnectPage(mapStateToStore)).toThrow();
   });
 
-  it('测试 ConnectComponent mapDispatchToStore 异常', () => {
+  it('测试 ConnectComponent mapPureDataToStore 异常', () => {
     const mapStateToStore = () => ({});
-    const mapDispatchToStore = () => Object;
+    const mapPureDataToStore = () => Object;
 
-    expect(ConnectPage(mapStateToStore, mapDispatchToStore)).toThrow();
+    expect(ConnectPage(mapStateToStore, mapPureDataToStore)).toThrow();
   });
 
   it('测试 ConnectPage 更新状态', (done) => {

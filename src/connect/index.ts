@@ -2,9 +2,9 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 12:37:19
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-11 11:38:54
+ * @LastEditTime: 2020-04-11 12:58:26
  */
-import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectType } from '../types';
+import { AnyObject, MapStateToStore, MapPureDataToStore, ConnectType } from '../types';
 import { useState, useDispatch } from '../api/hooks';
 import diff from '../utils/diff';
 import isEmptyObject from '../utils/isEmptyObject';
@@ -18,19 +18,19 @@ import mixinLifetimes from './mixinLifetimes';
 
 const mapStateToStoreDefault: MapStateToStore = () => ({});
 
-const mapDispatchToStoreDefault: MapDispatchToStore = (dispatch) => ({ dispatch });
+const mapPureDataToStoreDefault: MapPureDataToStore = (dispatch) => ({ dispatch });
 
 /**
  * 连接 Redux Store
  *
  * @param type 连接类型
  * @param mapStateToStore 订阅 state 的函数
- * @param mapDispatchToStore 包装 dispatch 的函数
+ * @param mapPureDataToStore 订阅 state 包装 dispatch 的函数
  */
 export default function connect(
   type: ConnectType,
   mapStateToStore: MapStateToStore = mapStateToStoreDefault,
-  mapDispatchToStore: MapDispatchToStore = mapDispatchToStoreDefault
+  mapPureDataToStore: MapPureDataToStore = mapPureDataToStoreDefault
 ) {
   return function connected(options: AnyObject): AnyObject {
     /**
@@ -54,9 +54,9 @@ export default function connect(
      *
      * 在多个实例间共享
      */
-    const currentDispatch = mapDispatchToStore(useDispatch());
+    const currentPureData = mapPureDataToStore(useDispatch(), useState());
 
-    verifyPlainObject('mapDispatchToStore()', currentDispatch);
+    verifyPlainObject('mapPureDataToStore()', currentPureData);
 
     /**
      * 当前被创建的实例集合
@@ -79,6 +79,10 @@ export default function connect(
       console.log(commit.state);
       commit.run(() => {
         const nextState = mapStateToStore(state);
+        const nextPureData = mapPureDataToStore(useDispatch(), state);
+
+        Object.assign(currentPureData, nextPureData);
+
         const updateState = diff(currentState, nextState);
 
         if (isEmptyObject(updateState)) {
@@ -97,7 +101,7 @@ export default function connect(
      * @param this 当前实例
      */
     function load(this: AnyObject): void {
-      proxyConnectStore(this, commit, currentState, currentDispatch, copyState);
+      proxyConnectStore(this, commit, currentState, currentPureData, copyState);
 
       // 加载时添加当前实例到实例集合
       instances.push(this);

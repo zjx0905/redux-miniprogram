@@ -87,10 +87,10 @@ describe('测试 core/Component.ts', () => {
     expect(ConnectComponent(mapStateToStore)).toThrow();
   });
 
-  it('测试 ConnectComponent mapDispatchToStore 异常', () => {
+  it('测试 ConnectComponent mapPureDataToStore 异常', () => {
     const mapStateToStore = () => ({});
-    const mapDispatchToStore = () => Object;
+    const mapPureDataToStore = () => Object;
 
-    expect(ConnectComponent(mapStateToStore, mapDispatchToStore)).toThrow();
+    expect(ConnectComponent(mapStateToStore, mapPureDataToStore)).toThrow();
   });
 });
