@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-28 17:41:06
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-11 12:57:17
+ * @LastEditTime: 2020-04-11 16:14:57
  */
 import 'miniprogram-api-typings';
 import { Store, Dispatch } from 'redux';
@@ -30,7 +30,7 @@ export declare type ConnectPageOptions<
 > = ThisType<
   {
     /**
-     * mapStateToStore() 和 mapPureDataToStore() 合并出的 ConnectStore
+     * mapStateToStore() 和 mapDispatchToStore() 合并出的 Connect Store
      *
      * 含有订阅的 state 以及 dispatch 函数
      *
@@ -49,7 +49,7 @@ export declare type ConnectComponentOptions<
 > = ThisType<
   {
     /**
-     * mapStateToStore() 和 mapPureDataToStore() 合并出的 ConnectStore
+     * mapStateToStore() 和 mapDispatchToStore() 合并出的 Connect Store
      *
      * 含有订阅的 state 以及 dispatch 函数
      *
@@ -84,9 +84,12 @@ export interface Commit {
 }
 
 export interface MapStateToStore {
-  (state: any): AnyObject;
+  (state: any): {
+    state?: AnyObject;
+    pureState?: AnyObject;
+  };
 }
 
-export interface MapPureDataToStore<T extends Dispatch = Dispatch> {
-  (dispatch: T, state: any): AnyObject;
+export interface MapDispatchToStore<T extends Dispatch = Dispatch> {
+  (dispatch: T): AnyObject;
 }

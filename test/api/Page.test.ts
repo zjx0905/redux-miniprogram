@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-04-05 15:13:23
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-11 11:43:22
+ * @LastEditTime: 2020-04-11 17:16:48
  */
 import { createStore } from 'redux';
 import ConnectPage from '../../src/api/Page';
@@ -30,13 +30,21 @@ global.getApp = jest.fn(() => ({ store }));
 
 describe('测试 core/Page.ts', () => {
   it('测试 ConnectPage 默认参数', () => {
-    const pageOptions = ConnectPage()({});
+    const pageOptions = ConnectPage()({
+      onLoad() {
+        this.store.dispatch({
+          type: 'test',
+        });
+      },
+    });
 
     // pageOptions.data.store 应该是一个空对象
     expect(pageOptions.data).toEqual({ store: {} });
 
-    // pageOptions.onLoad 应该存在
-    expect(pageOptions.onLoad).toBeDefined();
+    if (pageOptions.onLoad) {
+      // pageOptions.onLoad 应该存在
+      pageOptions.onLoad();
+    }
 
     // pageOptions.onUnload 应该存在
     expect(pageOptions.onUnload).toBeDefined();
@@ -46,7 +54,7 @@ describe('测试 core/Page.ts', () => {
     const onLoad = jest.fn();
     const onUnload = jest.fn();
     const pageOptions = ConnectPage(
-      () => ({ count: 0 }),
+      () => ({ state: { count: 0 } }),
       () => ({
         dispatch: 0,
       })
@@ -74,20 +82,25 @@ describe('测试 core/Page.ts', () => {
   });
 
   it('测试 ConnectComponent mapStateToStore 异常', () => {
-    const mapStateToStore = () => Object;
+    const mapStateToStore = () => ({
+      state: Object,
+    });
 
     expect(ConnectPage(mapStateToStore)).toThrow();
   });
 
-  it('测试 ConnectComponent mapPureDataToStore 异常', () => {
+  it('测试 ConnectComponent mapDispatchToStore 异常', () => {
     const mapStateToStore = () => ({});
-    const mapPureDataToStore = () => Object;
+    const mapDispatchToStore = () => Object;
 
-    expect(ConnectPage(mapStateToStore, mapPureDataToStore)).toThrow();
+    expect(ConnectPage(mapStateToStore, mapDispatchToStore)).toThrow();
   });
 
   it('测试 ConnectPage 更新状态', (done) => {
-    const pageOptions = ConnectPage((state) => ({ count: state.count }))({
+    const pageOptions = ConnectPage((state) => ({
+      state: { count: state.count },
+      pureState: { count: state.count },
+    }))({
       data: { store: undefined },
       update() {
         // 直接赋值 this.store 应该报错
@@ -119,7 +132,8 @@ describe('测试 core/Page.ts', () => {
         });
       },
       setData() {
-        expect(pageOptions.data.store).toStrictEqual({ count: 0 });
+        // 应该还是为空
+        expect(this.data.store).toStrictEqual({ count: 0 });
       },
     });
 

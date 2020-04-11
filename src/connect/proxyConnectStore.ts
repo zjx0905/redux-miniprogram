@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 17:18:03
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-11 12:59:32
+ * @LastEditTime: 2020-04-11 16:15:37
  */
 import { AnyObject, Commit } from '../types';
 import assert from '../utils/assert';
@@ -11,7 +11,7 @@ const GET_ERROR_MESSAGE = `需要通过 this.store.xxx 获取 store 中的状态
 const SET_ERROR_MESSAGE = `需要通过 dispatch 修改 store 中的状态`;
 
 /**
- * 将 ConnectStore 代理到当前实例的 store 属性
+ * 将 Connect Store 代理到当前实例的 store 属性
  *
  * 并劫持 data 中的 store 属性 防篡改
  *
@@ -23,13 +23,14 @@ const SET_ERROR_MESSAGE = `需要通过 dispatch 修改 store 中的状态`;
 export default function proxyConnectStore(
   instance: AnyObject,
   commit: Commit,
-  currentState: AnyObject,
-  currentPureData: AnyObject,
-  copyState: AnyObject
+  state: AnyObject,
+  pureState: AnyObject,
+  copyState: AnyObject,
+  dispatch: AnyObject
 ): void {
   Object.defineProperty(instance, 'store', {
     get() {
-      return { ...currentState, ...currentPureData };
+      return { ...state, ...pureState, ...dispatch };
     },
     set() {
       assert(commit.getState() === false, SET_ERROR_MESSAGE);

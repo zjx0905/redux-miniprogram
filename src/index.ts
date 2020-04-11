@@ -13,7 +13,7 @@ export {
   ConnectPageOptions,
   ConnectComponentOptions,
   MapStateToStore,
-  MapPureDataToStore,
+  MapDispatchToStore,
 } from './types';
 
 export { useStore, useState, useDispatch } from './api/hooks';

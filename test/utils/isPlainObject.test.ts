@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-04-05 20:52:44
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-05 21:00:19
+ * @LastEditTime: 2020-04-11 16:41:16
  */
 import isPlainObject from '../../src/utils/isPlainObject';
 
@@ -20,7 +20,7 @@ describe('测试 utils/isPlainObject.ts', () => {
     expect(isPlainObject([])).toBeFalsy();
     expect(isPlainObject(NaN)).toBeFalsy();
     expect(isPlainObject(true)).toBeFalsy();
-    expect(isPlainObject(Object)).toBeFalsy();
+    expect(isPlainObject(new Function())).toBeFalsy();
     expect(
       isPlainObject(() => {
         1;

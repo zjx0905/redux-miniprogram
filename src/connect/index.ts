@@ -2,9 +2,9 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 12:37:19
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-11 12:58:26
+ * @LastEditTime: 2020-04-11 17:02:27
  */
-import { AnyObject, MapStateToStore, MapPureDataToStore, ConnectType } from '../types';
+import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectType } from '../types';
 import { useState, useDispatch } from '../api/hooks';
 import diff from '../utils/diff';
 import isEmptyObject from '../utils/isEmptyObject';
@@ -18,19 +18,19 @@ import mixinLifetimes from './mixinLifetimes';
 
 const mapStateToStoreDefault: MapStateToStore = () => ({});
 
-const mapPureDataToStoreDefault: MapPureDataToStore = (dispatch) => ({ dispatch });
+const mapDispatchToStoreDefault: MapDispatchToStore = (dispatch) => ({ dispatch });
 
 /**
  * 连接 Redux Store
  *
  * @param type 连接类型
- * @param mapStateToStore 订阅 state 的函数
- * @param mapPureDataToStore 订阅 state 包装 dispatch 的函数
+ * @param mapStateToStore 订阅 state
+ * @param mapDispatchToStore 包装 dispatch
  */
 export default function connect(
   type: ConnectType,
   mapStateToStore: MapStateToStore = mapStateToStoreDefault,
-  mapPureDataToStore: MapPureDataToStore = mapPureDataToStoreDefault
+  mapDispatchToStore: MapDispatchToStore = mapDispatchToStoreDefault
 ) {
   return function connected(options: AnyObject): AnyObject {
     /**
@@ -43,20 +43,22 @@ export default function connect(
      *
      * 在多个实例间共享
      */
-    const currentState = mapStateToStore(useState());
+    const { state = {}, pureState = {} } = mapStateToStore(useState());
 
-    verifyPlainObject('mapStateToStore()', currentState);
+    verifyPlainObject('mapStateToStore() state', state);
 
-    const copyState = serializedCopy(currentState);
+    verifyPlainObject('mapStateToStore() pureState', pureState);
+
+    const copyState = serializedCopy(state);
 
     /**
      * 当前组件包装的 dispatch
      *
      * 在多个实例间共享
      */
-    const currentPureData = mapPureDataToStore(useDispatch(), useState());
+    const dispatch = mapDispatchToStore(useDispatch());
 
-    verifyPlainObject('mapPureDataToStore()', currentPureData);
+    verifyPlainObject('mapDispatchToStore()', dispatch);
 
     /**
      * 当前被创建的实例集合
@@ -75,21 +77,25 @@ export default function connect(
      *
      * @param state Redux Store
      */
-    function updater(state: AnyObject) {
-      console.log(commit.state);
+    function updater(rootState: AnyObject) {
       commit.run(() => {
-        const nextState = mapStateToStore(state);
-        const nextPureData = mapPureDataToStore(useDispatch(), state);
+        const { state: nextState, pureState: nextPureState } = mapStateToStore(rootState);
 
-        Object.assign(currentPureData, nextPureData);
+        if (nextPureState !== undefined) {
+          Object.assign(pureState, nextPureState);
+        }
 
-        const updateState = diff(currentState, nextState);
+        if (nextState === undefined) {
+          return;
+        }
+
+        const updateState = diff(state, nextState);
 
         if (isEmptyObject(updateState)) {
           return;
         }
 
-        Object.assign(currentState, nextState);
+        Object.assign(state, nextState);
 
         instances.forEach((instance) => instance.setData(updateState));
       });
@@ -101,7 +107,7 @@ export default function connect(
      * @param this 当前实例
      */
     function load(this: AnyObject): void {
-      proxyConnectStore(this, commit, currentState, currentPureData, copyState);
+      proxyConnectStore(this, commit, state, pureState, copyState, dispatch);
 
       // 加载时添加当前实例到实例集合
       instances.push(this);

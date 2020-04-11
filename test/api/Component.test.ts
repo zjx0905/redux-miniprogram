@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-04-05 19:43:52
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-07 19:47:57
+ * @LastEditTime: 2020-04-11 16:56:50
  */
 import { createStore } from 'redux';
 import ConnectComponent from '../../src/api/Component';
@@ -46,7 +46,7 @@ describe('测试 core/Component.ts', () => {
     const attached = jest.fn();
     const detached = jest.fn();
     const componentOptions = ConnectComponent(
-      () => ({ count: 1 }),
+      () => ({ state: { count: 1 } }),
       () => ({
         dispatch: 1,
       })
@@ -82,15 +82,15 @@ describe('测试 core/Component.ts', () => {
   });
 
   it('测试 ConnectComponent mapStateToStore 异常', () => {
-    const mapStateToStore = () => Object;
+    const mapStateToStore = () => ({ pureState: Object });
 
     expect(ConnectComponent(mapStateToStore)).toThrow();
   });
 
-  it('测试 ConnectComponent mapPureDataToStore 异常', () => {
+  it('测试 ConnectComponent mapDispatchToStore 异常', () => {
     const mapStateToStore = () => ({});
-    const mapPureDataToStore = () => Object;
+    const mapDispatchToStore = () => Object;
 
-    expect(ConnectComponent(mapStateToStore, mapPureDataToStore)).toThrow();
+    expect(ConnectComponent(mapStateToStore, mapDispatchToStore)).toThrow();
   });
 });

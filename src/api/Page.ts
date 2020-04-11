@@ -2,22 +2,22 @@
  * @Author: early-autumn
  * @Date: 2020-03-25 14:54:52
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-07 21:08:54
+ * @LastEditTime: 2020-04-11 13:52:14
  */
-import { AnyObject, MapStateToStore, MapPureDataToStore, ConnectPageOptions } from '../types';
+import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectPageOptions } from '../types';
 import connect from '../connect';
 
 /**
  * Page 连接 Redux Store
  *
- * @param mapStateToStore 订阅 state 的函数
- * @param mapPureDataToStore 包装 dispatch 的函数
+ * @param mapStateToStore 订阅 state
+ * @param mapDispatchToStore 包装 dispatch
  *
  * @ [查看文档](https://github.com/early-autumn/redux-miniprogram#connectpagemapstatetostore-mapdispatchtostoreoptions)
  */
 export default function ConnectPage<TStore extends AnyObject>(
   mapStateToStore?: MapStateToStore,
-  mapPureDataToStore?: MapPureDataToStore
+  mapDispatchToStore?: MapDispatchToStore
 ) {
   return function Connected<
     TData extends WechatMiniprogram.Page.DataOption,
@@ -25,7 +25,7 @@ export default function ConnectPage<TStore extends AnyObject>(
   >(
     options: ConnectPageOptions<TStore, TData, TCustom>
   ): ConnectPageOptions<TStore, TData, TCustom> {
-    return connect('page', mapStateToStore, mapPureDataToStore)(options) as ConnectPageOptions<
+    return connect('page', mapStateToStore, mapDispatchToStore)(options) as ConnectPageOptions<
       TStore,
       TData,
       TCustom
