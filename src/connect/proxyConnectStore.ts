@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 17:18:03
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-09 09:47:35
+ * @LastEditTime: 2020-04-11 10:17:12
  */
 import { AnyObject, Commit } from '../types';
 import assert from '../utils/assert';
@@ -24,7 +24,8 @@ export default function proxyConnectStore(
   instance: AnyObject,
   commit: Commit,
   currentState: AnyObject,
-  currentDispatch: AnyObject
+  currentDispatch: AnyObject,
+  copyState: AnyObject
 ): void {
   Object.defineProperty(instance, 'store', {
     get() {
@@ -39,7 +40,7 @@ export default function proxyConnectStore(
     get() {
       assert(commit.getState() === false, GET_ERROR_MESSAGE);
 
-      return GET_ERROR_MESSAGE;
+      return copyState;
     },
     set() {
       assert(commit.getState() === false, SET_ERROR_MESSAGE);

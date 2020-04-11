@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-04-05 15:13:23
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-08 00:08:41
+ * @LastEditTime: 2020-04-11 11:43:22
  */
 import { createStore } from 'redux';
 import ConnectPage from '../../src/api/Page';
@@ -119,7 +119,7 @@ describe('测试 core/Page.ts', () => {
         });
       },
       setData() {
-        expect(pageOptions.data.store).toBe('需要通过 this.store.xxx 获取 store 中的状态');
+        expect(pageOptions.data.store).toStrictEqual({ count: 0 });
       },
     });
 

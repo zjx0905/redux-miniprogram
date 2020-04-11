@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-28 17:41:06
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-09 09:46:32
+ * @LastEditTime: 2020-04-09 16:20:14
  */
 import 'miniprogram-api-typings';
 import { Store, Dispatch } from 'redux';
@@ -35,7 +35,6 @@ export declare type ConnectPageOptions<
      * 含有订阅的 state 以及 dispatch 函数
      *
      * [查看文档](https://github.com/early-autumn/redux-miniprogram#%E5%8F%82%E6%95%B0-2)
-     *
      */
     store: TStore;
   } & WechatMiniprogram.Page.Instance<TData, TCustom>

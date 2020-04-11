@@ -474,3 +474,117 @@ import { useDispatch } from "redux-miniprogram";
 
 const dispatch = useDispatch();
 ```
+
+## 注意
+
+因为 [diff](https://github.com/early-autumn/redux-miniprogram/blob/master/src/utils/diff.ts) 算法中判断相等的方式和 [Object.is()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/is) 表现一致, 所以修改状态必须返回不可变数据, 否则不会触发更新
+
+如何操作不可变数据?
+
+`Object` 操作不可变数据举例
+
+```typescript
+{...}
+Object.assign()
+```
+
+`Array` 操作不可变数据举例
+
+```typescript
+[...]
+[].concat()
+[].map()
+[].filter()
+```
+
+不使用不可变数据会发生什么?
+
+```typescript
+const a = {};
+const b = a;
+a === b // true
+
+const c = [];
+const d = c;
+c.push(100);
+c === d // true
+```
+
+使用不可变数据后
+
+```typescript
+const a = {};
+const b = {...a};
+a === b // false
+
+const c = [];
+const d = [...c];
+c.push(100);
+c === d // false
+```
+
+下面列举了部分利用不可变数据修改状态的方式
+
+```typescript
+const initState = {
+  a: {
+    v:1
+  },
+  b: [1]
+}
+
+function reducer(state = initState, action) {
+  switch(action.type){
+    case '对象 a 修改属性 v 的值': {
+      const newA = {
+        ...state.a
+        v: action.payload
+      };
+      return {
+        ...state,
+        a: newA
+      }
+    }
+    case '对象 a 新增属性 v2': {
+      const newA = {
+        ...state.a
+        v2: action.payload
+      };
+      return {
+        ...state,
+        a: newA
+      }
+    }
+    case '对象 a 删除属性 v2': {
+      const newA = {...state.a};
+      delete newA.v2;
+      return {
+        ...state,
+        a: newA
+      }
+    }
+    case '数组 b 修改指定下标的值': {
+      return {
+        ...state,
+        b: state.b.map((item, index) => {
+          return index === action.index ? action.payload : item;
+        })
+      }
+    }
+    case '数组 b 添加新值': {
+      return {
+        ...state,
+        b: [...state.b, action.payload]
+      }
+    }
+    case '数组 b 删除指定下标的值': {
+      return {
+        ...state,
+        b: state.b.filter((item, index) => index !== action.index)
+      }
+    }
+    default:
+      return {...state}
+  }
+}
+```

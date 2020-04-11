@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-06 20:40:30
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-03-30 20:24:25
+ * @LastEditTime: 2020-04-11 10:05:38
  */
 import fs from 'fs';
 import path from 'path';
@@ -18,9 +18,7 @@ function removeDir(name) {
       fs.readdirSync(name).forEach((dir) => removeDir(path.join(name, dir)));
       fs.rmdirSync(name);
     }
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 }
 
 export default function() {

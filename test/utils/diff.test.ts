@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-30 19:10:52
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-03-31 21:22:18
+ * @LastEditTime: 2020-04-11 10:18:37
  */
 import diff from '../../src/utils/diff';
 
@@ -27,7 +27,7 @@ describe('测试 utils/diff.ts', () => {
         { a: { v: {} }, b: [1, 2, 3, []], c: 1, d: 5, e: 2, f: '1', g: NaN }
       )
     ).toEqual({
-      'store.a': { v: {} },
+      'store.a.v': {},
       'store.b': [1, 2, 3, []],
       'store.c': 1,
       'store.d': 5,

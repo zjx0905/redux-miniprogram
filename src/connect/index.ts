@@ -2,13 +2,14 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 12:37:19
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-09 09:52:49
+ * @LastEditTime: 2020-04-11 11:38:54
  */
 import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectType } from '../types';
 import { useState, useDispatch } from '../api/hooks';
 import diff from '../utils/diff';
 import isEmptyObject from '../utils/isEmptyObject';
 import verifyPlainObject from '../utils/verifyPlainObject';
+import serializedCopy from '../utils/serializedCopy';
 import createCommit from './createCommit';
 import batchUpdate from './batchUpdate';
 import proxyConnectStore from './proxyConnectStore';
@@ -46,6 +47,8 @@ export default function connect(
 
     verifyPlainObject('mapStateToStore()', currentState);
 
+    const copyState = serializedCopy(currentState);
+
     /**
      * 当前组件包装的 dispatch
      *
@@ -73,6 +76,7 @@ export default function connect(
      * @param state Redux Store
      */
     function updater(state: AnyObject) {
+      console.log(commit.state);
       commit.run(() => {
         const nextState = mapStateToStore(state);
         const updateState = diff(currentState, nextState);
@@ -93,7 +97,7 @@ export default function connect(
      * @param this 当前实例
      */
     function load(this: AnyObject): void {
-      proxyConnectStore(this, commit, currentState, currentDispatch);
+      proxyConnectStore(this, commit, currentState, currentDispatch, copyState);
 
       // 加载时添加当前实例到实例集合
       instances.push(this);
@@ -126,6 +130,6 @@ export default function connect(
       }
     }
 
-    return mixinLifetimes(type, mixinInitData(options, currentState), load, unload);
+    return mixinLifetimes(type, mixinInitData(options, copyState), load, unload);
   };
 }
