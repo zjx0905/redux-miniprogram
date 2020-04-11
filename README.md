@@ -593,11 +593,13 @@ const dispatch = useDispatch();
 
 ## 优化
 
-`mapStateToStore` 订阅的 state 会参与渲染, 所以当 `mapStateToStore` 订阅的 state 发生改变时, 会触发小程序的 [setData](https://developers.weixin.qq.com/miniprogram/dev/framework/performance/tips.html) 接口更新视图, 而 setData 性能开销是昂贵的
+`mapStateToStore` 订阅的 state 会参与渲染, 所以当 `mapStateToStore` 订阅的 state 发生改变时, 会触发小程序的 [setData](https://developers.weixin.qq.com/miniprogram/dev/framework/performance/tips.html) 接口更新视图, 而 setData 的性能开销是昂贵的
 
-可能有时候我们需要订阅某些 state, 但是这些 state 又不会参与渲染, 这种情况下调用 setData 很明显是多余的, 带来的完全是不必要的性能开销
+可能有时候我们需要订阅某些 state, 但是这些 state 又不会参与渲染, 这种情况下 state 发生了改变导致的 setData 很明显是多余的, 带来的是完全不必要的性能开销
 
-所以我们可以利用 `mapPureDataToStore` 的第二个参数 `state` 订阅到我们需要的 state, `mapPureDataToStore` 的第二个参数 `state` 和 `mapStateToStore` 的 `state` 是完全一样的!
+所以我们可以利用 `mapPureDataToStore` 的第二个参数 `state` 订阅到我们需要的 state, `mapPureDataToStore` 的第二个参数 `state` 和 `mapStateToStore` 的 `state` 是完全一样的
+
+`mapPureDataToStore` 订阅的 state 不会参与渲染, 也不要拿来渲染
 
 ```typescript
 const state = {
