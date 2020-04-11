@@ -477,7 +477,7 @@ const dispatch = useDispatch();
 
 ## 注意
 
-因为 [diff](https://github.com/early-autumn/redux-miniprogram/blob/master/src/utils/diff.ts) 算法中判断相等的方式和 [Object.is()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/is) 表现一致, 所以修改状态必须返回不可变数据, 否则不会触发更新
+因为 [diff](https://github.com/early-autumn/redux-miniprogram/blob/master/src/utils/diff.ts) 算法中判断相等的方式和 [Object.is()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/is) 的表现一致, 所以修改状态必须返回[不可变数据](https://zh-hans.reactjs.org/docs/optimizing-performance.html#the-power-of-not-mutating-data), 否则不会触发更新
 
 如何操作不可变数据?
 
@@ -500,8 +500,9 @@ Object.assign()
 不使用不可变数据会发生什么?
 
 ```typescript
-const a = {};
+const a = { v: 1 };
 const b = a;
+a.v = 100;
 a === b // true
 
 const c = [];
@@ -513,8 +514,9 @@ c === d // true
 使用不可变数据后
 
 ```typescript
-const a = {};
+const a = { v: 1 };
 const b = {...a};
+a.v = 100;
 a === b // false
 
 const c = [];
