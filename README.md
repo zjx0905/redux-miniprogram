@@ -19,12 +19,12 @@ npm i redux-miniprogram
 
 ## 简介
 
-微信小程序 redux 绑定工具，使用体验类似 react-redux。
+微信小程序 redux 绑定工具。
+
+它使您的 `Page` 和 `Component` 可以从 `Redux Store` 中读取数据，并向 `Redux Store` 派发 `action` 以更新数据，使用体验类似 react-redux。
 
 * 支持 批量更新
 * 支持 typescript
-
-> 批量更新是异步的。
 
 ## 使用
 
@@ -102,13 +102,8 @@ Page(
   ConnectPage(mapStateToStore, mapDispatchToStore)({ 
     onLoad: function() {
       // 使用了和 vue 一样的批量更新 多次修改会合并成一次
-      this.store.dispatch(saveCount(10));
-      this.store.dispatch(saveCount(20));
-      this.store.saveCount(30);
+      this.store.dispatch(saveCount(10)); 
       this.store.saveCount(100); 
-
-      // 批量更新是异步的
-      console.log(this.store.count); // 0
 
       setTimeout(() => {
         console.log(this.store.count); // 100
@@ -621,9 +616,9 @@ const dispatch = useDispatch();
 
 `mapStateToStore` 订阅的 `state` 会参与渲染, 所以当 `mapStateToStore` 订阅的 `state` 发生改变时, 会触发小程序的 [setData](https://developers.weixin.qq.com/miniprogram/dev/framework/performance/tips.html) 接口更新视图, 而 setData 的性能开销是十分昂贵的
 
-可能有时候我们需要订阅某些 `state`, 但是这些 `state` 又不会参与渲染, 这种情况下 `state` 发生了改变导致的 `setData` 很明显是多余的, 带来的是完全不必要的性能开销
+可能有时候我们需要订阅某些 `state`, 但是这些 `state` 并不会参与渲染, 这种情况下 `state` 发生改变导致的 `setData` 很明显是多余的, 带来的是完全不必要的性能开销
 
-所以不参与渲染的 `state` 尽量使用 `pureState` 订阅, 不然容易就会出现性能瓶颈
+所以不参与渲染的 `state` 尽量使用 `pureState` 订阅, 不然容易出现性能瓶颈
 
 ```typescript
 const state = {
