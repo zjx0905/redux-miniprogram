@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 19:41:14
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-13 13:26:32
+ * @LastEditTime: 2020-04-13 17:23:18
  */
 import { AnyObject } from '../types';
 
@@ -23,51 +23,47 @@ function is(x: any, y: any) {
 }
 
 /**
- * 对比值
+ * 对比处理函数
  *
- * @param valueA 对比值
- * @param valB   对比值
- * @param target 对比结果
- * @param path   对比路径
- * @param type   对比类型
+ * @param oldValue 旧值
+ * @param newValue 新值
+ * @param target   对比结果
+ * @param path     对比路径
+ * @param next     继续对比
  */
 function handler(
-  valueA: any,
-  valueB: any,
+  oldValue: any,
+  newValue: any,
   target: AnyObject,
   path: string[],
-  type: 'array' | 'object'
+  next: () => void
 ) {
-  // 严格相等 直接返回
-  if (is(valueA, valueB)) {
+  // 严格相等
+  // 直接返回
+  if (is(oldValue, newValue)) {
     return;
   }
 
-  // 基本类型直接赋值
+  // 基本类型
+  // 直接赋新值并返回
   if (
-    typeof valueA !== 'object' ||
-    valueA === null ||
-    typeof valueB !== 'object' ||
-    valueB === null
+    typeof oldValue !== 'object' ||
+    oldValue === null ||
+    typeof newValue !== 'object' ||
+    newValue === null
   ) {
-    target[path.join('')] = valueB;
-
+    target[path.join('')] = newValue;
     return;
   }
 
-  const keys1 = Object.keys(valueA).length;
-  const keys2 = Object.keys(valueB).length;
-
-  // keys 的长度不相等 直接赋值
-  if (keys1 !== keys2 || path.length === 5) {
-    target[path.join('')] = valueB;
-
+  // keys 的长度不相等 或者 path 深度大于等于 5
+  // 直接赋新值并返回
+  if (Object.keys(oldValue).length !== Object.keys(newValue).length || path.length >= 5) {
+    target[path.join('')] = newValue;
     return;
   }
 
-  // 递归
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
-  diff(valueA, valueB, target, path, type);
+  next();
 }
 
 /**
@@ -75,28 +71,32 @@ function handler(
  *
  * 计算最小更新
  *
- * @param stateA 参与对比的旧状态
- * @param stateB 参与对比的新状态
- * @param target 对比结果
- * @param path   对比路径
- * @param type   对比类型
+ * @param oldValue 参与对比的旧值
+ * @param newValue 参与对比的新值
+ * @param target   对比结果
+ * @param path     对比路径
+ * @param type     对比类型
  */
 export default function diff(
-  stateA: AnyObject,
-  stateB: AnyObject,
-  // stateA: AnyObject | any[],
-  // stateB: AnyObject | any[],
+  oldValue: AnyObject,
+  newValue: AnyObject,
+  // oldValue: AnyObject | any[],
+  // newValue: AnyObject | any[],
   target: AnyObject = {},
   path: string[] = ['store'],
   type: 'object' | 'array' = 'object'
 ) {
-  Object.keys(stateA).forEach((key: string) => {
-    const valueA = stateA[key];
-    const valueB = stateB[key];
-    const currentPath = [...path, type === 'array' ? `[${key}]` : `.${key}`];
-    const currentType = Array.isArray(valueA) ? 'array' : 'object';
+  Object.keys(oldValue).forEach((key: string) => {
+    const oldKeyValue = oldValue[key];
+    const newKeyValue = newValue[key];
+    const pathKey = type === 'array' ? `[${key}]` : `.${key}`;
+    const newPath = [...path, pathKey];
 
-    handler(valueA, valueB, target, currentPath, currentType);
+    handler(oldKeyValue, newKeyValue, target, newPath, () => {
+      const newType = Array.isArray(oldKeyValue) ? 'array' : 'object';
+
+      diff(oldKeyValue, newKeyValue, target, newPath, newType);
+    });
   });
 
   return target;

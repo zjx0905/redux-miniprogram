@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 12:37:19
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-13 13:27:08
+ * @LastEditTime: 2020-04-13 16:29:20
  */
 import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectType } from '../types';
 import { useState, useDispatch } from '../api/hooks';
@@ -52,7 +52,7 @@ export default function connect(
     const copyState = serializeCopy(state);
 
     /**
-     * 当前组件包装的 dispatch
+     * 当前组件的 dispatch
      *
      * 在多个实例间共享
      */
@@ -61,7 +61,7 @@ export default function connect(
     verifyPlainObject('mapDispatchToStore()', dispatch);
 
     /**
-     * 当前被创建的实例集合
+     * 当前组件的实例集合
      */
     const instances: AnyObject[] = [];
 

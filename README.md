@@ -401,7 +401,7 @@ const mapDispatchToStore = (dispatch) => {
 
 `Object` ([Page Options](https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html)) 一个新的注册小程序中的一个页面所需的参数
 
-`Connected` 用来把 `Connect Store` 添加到 `Page Options` 中，使 `wxml` 中 `store.xxx` 和 `javascript` 中 `this.store.xxx` 能获取到 `Connect Store` 中的状态和 `dispatch` 函数。
+`Connected` 用来把 `Connect Store` 添加到 `Page Options` 中，使 `wxml` 中 `store.xxx` 和 `javascript` 中 `this.store.xxx` 能读取到 `Connect Store` 中的状态和 `dispatch` 函数。
 
 ```tsx
 // Page Options
@@ -528,7 +528,7 @@ const mapDispatchToStore = (dispatch) => {
 
 `Object` ([Component Options](https://developers.weixin.qq.com/miniprogram/dev/reference/api/Component.html)) 一个新的注册小程序中的一个页面所需的参数
 
-`Connected` 用来把 `Connect Store` 添加到 `Component Options` 中，使 `wxml` 中 `store.xxx` 和 `javascript` 中 `this.store.xxx` 能获取到 `Connect Store` 中的状态和 `dispatch` 函数。
+`Connected` 用来把 `Connect Store` 添加到 `Component Options` 中，使 `wxml` 中 `store.xxx` 和 `javascript` 中 `this.store.xxx` 能读取到 `Connect Store` 中的状态和 `dispatch` 函数。
 
 ```tsx
 // Component Options
