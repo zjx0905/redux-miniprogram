@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 13:06:27
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-07 21:01:01
+ * @LastEditTime: 2020-04-13 13:26:52
  */
 import { AnyObject, ConnectType } from '../types';
 
@@ -10,9 +10,9 @@ import { AnyObject, ConnectType } from '../types';
  * 执行新增逻辑和原始生命周期函数
  *
  * @param this 当前实例
- * @param cur 新增逻辑
- * @param old 原始生命周期函数
- * @param arg 额外的参数数组
+ * @param cur  新增逻辑
+ * @param old  原始生命周期函数
+ * @param arg  额外的参数数组
  */
 function executeLifetime(this: AnyObject, cur: Function, old: Function, arg: any[]) {
   cur.call(this, ...arg);

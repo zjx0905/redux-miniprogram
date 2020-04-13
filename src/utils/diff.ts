@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 19:41:14
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-13 13:19:20
+ * @LastEditTime: 2020-04-13 13:26:32
  */
 import { AnyObject } from '../types';
 
@@ -26,10 +26,10 @@ function is(x: any, y: any) {
  * 对比值
  *
  * @param valueA 对比值
- * @param valB 对比值
+ * @param valB   对比值
  * @param target 对比结果
- * @param path 对比路径
- * @param type 对比类型
+ * @param path   对比路径
+ * @param type   对比类型
  */
 function handler(
   valueA: any,
@@ -78,8 +78,8 @@ function handler(
  * @param stateA 参与对比的旧状态
  * @param stateB 参与对比的新状态
  * @param target 对比结果
- * @param path 对比路径
- * @param type 对比类型
+ * @param path   对比路径
+ * @param type   对比类型
  */
 export default function diff(
   stateA: AnyObject,

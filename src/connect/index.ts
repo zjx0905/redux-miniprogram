@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 12:37:19
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-13 13:21:31
+ * @LastEditTime: 2020-04-13 13:27:08
  */
 import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectType } from '../types';
 import { useState, useDispatch } from '../api/hooks';
@@ -23,8 +23,8 @@ const mapDispatchToStoreDefault: MapDispatchToStore = (dispatch) => ({ dispatch 
 /**
  * 连接 Redux Store
  *
- * @param type 连接类型
- * @param mapStateToStore 订阅 state
+ * @param type               连接类型
+ * @param mapStateToStore    订阅 state
  * @param mapDispatchToStore 包装 dispatch
  */
 export default function connect(
