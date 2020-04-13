@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-25 14:54:52
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-13 13:28:01
+ * @LastEditTime: 2020-04-13 16:22:56
  */
 import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectComponentOptions } from '../types';
 import connect from '../connect';
@@ -13,7 +13,7 @@ import connect from '../connect';
  * @param mapStateToStore    订阅的 state
  * @param mapDispatchToStore 包装过的 dispatch
  *
- * @ [查看文档](https://github.com/early-autumn/redux-miniprogram#connectcomponentmapstatetostore-mapdispatchtostoreoptions)
+ * @see[查看文档](https://github.com/early-autumn/redux-miniprogram#connectcomponentmapstatetostore-mapdispatchtostoreoptions)
  */
 export default function ConnectComponent<TStore extends AnyObject>(
   mapStateToStore?: MapStateToStore,

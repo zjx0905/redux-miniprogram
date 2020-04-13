@@ -2,11 +2,12 @@
  * @Author: early-autumn
  * @Date: 2020-03-25 18:01:06
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-13 11:25:50
+ * @LastEditTime: 2020-04-13 16:20:01
  */
 import Provider from './api/Provider';
 import ConnectPage from './api/Page';
 import ConnectComponent from './api/Component';
+import { useStore, useState, useDispatch } from './api/hooks';
 
 export {
   ProviderOptions,
@@ -16,6 +17,4 @@ export {
   MapDispatchToStore,
 } from './types';
 
-export { useStore, useState, useDispatch } from './api/hooks';
-
-export { Provider, ConnectPage, ConnectComponent };
+export { Provider, ConnectPage, ConnectComponent, useStore, useState, useDispatch };
