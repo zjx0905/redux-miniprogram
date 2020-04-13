@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 17:18:03
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-11 16:15:37
+ * @LastEditTime: 2020-04-13 13:23:17
  */
 import { AnyObject, Commit } from '../types';
 import assert from '../utils/assert';
@@ -19,6 +19,18 @@ const SET_ERROR_MESSAGE = `需要通过 dispatch 修改 store 中的状态`;
  * @param commit 提交状态
  * @param currentState 订阅的状态
  * @param currentStatic 订阅包装过的 dispatch
+ */
+/**
+ * 将 Connect Store 代理到当前实例的 store 属性
+ *
+ * 并劫持 data 中的 store 属性 防篡改
+ *
+ * @param instance   当前实例
+ * @param commit     提交状态
+ * @param state      订阅的状态
+ * @param pureState  纯状态
+ * @param copyState  订阅的状态副本
+ * @param dispatch   包装过的 dispatch
  */
 export default function proxyConnectStore(
   instance: AnyObject,

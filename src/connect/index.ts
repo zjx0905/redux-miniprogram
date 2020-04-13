@@ -2,14 +2,14 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 12:37:19
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-11 17:02:27
+ * @LastEditTime: 2020-04-13 13:21:31
  */
 import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectType } from '../types';
 import { useState, useDispatch } from '../api/hooks';
 import diff from '../utils/diff';
 import isEmptyObject from '../utils/isEmptyObject';
 import verifyPlainObject from '../utils/verifyPlainObject';
-import serializedCopy from '../utils/serializedCopy';
+import serializeCopy from '../utils/serializeCopy';
 import createCommit from './createCommit';
 import batchUpdate from './batchUpdate';
 import proxyConnectStore from './proxyConnectStore';
@@ -49,7 +49,7 @@ export default function connect(
 
     verifyPlainObject('mapStateToStore() pureState', pureState);
 
-    const copyState = serializedCopy(state);
+    const copyState = serializeCopy(state);
 
     /**
      * 当前组件包装的 dispatch
@@ -73,7 +73,7 @@ export default function connect(
     /**
      * 更新函数
      *
-     * 组件被多次实例化会共享同一个更新函数
+     * 在多个实例间共享
      *
      * @param state Redux Store
      */
