@@ -7,15 +7,15 @@
 
 ## 安装
 
-`
-yarn add redux-miniprogram
-`
+```bash
+$ yarn add redux-miniprogram
+```
 
 或者
 
-`
-npm i redux-miniprogram
-`
+```bash
+$ npm i redux-miniprogram
+```
 
 ## 简介
 
@@ -23,8 +23,8 @@ npm i redux-miniprogram
 
 它使您的 `Page` 和 `Component` 可以从 `Redux Store` 中读取数据，并向 `Redux Store` 派发 `action` 以更新数据，使用体验类似 react-redux。
 
-* 支持 批量更新
 * 支持 typescript
+* 支持 批量更新
 
 ## 使用
 

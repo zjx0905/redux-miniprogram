@@ -2,11 +2,11 @@
  * @Author: early-autumn
  * @Date: 2020-03-29 17:29:05
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-09 09:47:51
+ * @LastEditTime: 2020-04-14 09:43:24
  */
 import { Commit } from '../types';
 
-class CommitClass implements Commit {
+class CommitStatic implements Commit {
   task: 'sync' | 'async';
 
   state: boolean;
@@ -49,5 +49,5 @@ class CommitClass implements Commit {
  * 创建提交
  */
 export default function createCommit(task?: 'sync' | 'async'): Commit {
-  return new CommitClass(task);
+  return new CommitStatic(task);
 }
