@@ -2,7 +2,7 @@
  * @Author: early-autumn
  * @Date: 2020-04-04 19:14:44
  * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-21 13:26:39
+ * @LastEditTime: 2020-04-21 13:27:42
  */
 /**
  * 如果出错，则抛出异常。
@@ -14,9 +14,6 @@ export default function assert(error: boolean, message: string): void {
     const errMsg = `[redux-miniprogram]
     ${message}`;
 
-    if (typeof console !== 'undefined' && typeof console.error === 'function') {
-      console.error(errMsg);
-    }
     throw new Error(errMsg);
   }
 }
