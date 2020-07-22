@@ -1,9 +1,3 @@
-/*
- * @Author: early-autumn
- * @Date: 2020-04-04 14:50:22
- * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-07 19:48:06
- */
 import { createStore } from 'redux';
 import Provider from '../../src/api/Provider';
 

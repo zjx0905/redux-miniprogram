@@ -1,9 +1,3 @@
-/*
- * @Author: early-autumn
- * @Date: 2020-04-11 09:56:15
- * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-13 12:49:32
- */
 import { AnyObject } from '../types';
 
 /**

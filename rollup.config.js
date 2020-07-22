@@ -1,9 +1,4 @@
-/*
- * @Author: early-autumn
- * @Date: 2020-03-06 20:40:30
- * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-11 10:05:38
- */
+ 
 import fs from 'fs';
 import path from 'path';
 import nodeResolve from 'rollup-plugin-node-resolve';

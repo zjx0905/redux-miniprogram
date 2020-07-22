@@ -1,9 +1,3 @@
-/*
- * @Author: early-autumn
- * @Date: 2020-04-04 13:06:27
- * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-13 13:26:52
- */
 import { AnyObject, ConnectType } from '../types';
 
 /**

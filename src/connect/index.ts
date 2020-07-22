@@ -1,9 +1,3 @@
-/*
- * @Author: early-autumn
- * @Date: 2020-04-04 12:37:19
- * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-13 16:29:20
- */
 import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectType } from '../types';
 import { useState, useDispatch } from '../api/hooks';
 import diff from '../utils/diff';

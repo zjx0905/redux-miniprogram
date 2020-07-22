@@ -1,9 +1,3 @@
-/*
- * @Author: early-autumn
- * @Date: 2020-04-05 20:52:44
- * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-05 20:56:30
- */
 import isEmptyObject from '../../src/utils/isEmptyObject';
 
 describe('测试 utils/isEmptyObject.ts', () => {

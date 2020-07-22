@@ -1,9 +1,3 @@
-/*
- * @Author: early-autumn
- * @Date: 2020-03-30 19:10:52
- * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-11 10:18:37
- */
 import diff from '../../src/utils/diff';
 
 describe('测试 utils/diff.ts', () => {

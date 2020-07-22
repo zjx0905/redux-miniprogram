@@ -1,9 +1,3 @@
-/*
- * @Author: early-autumn
- * @Date: 2020-03-29 17:18:03
- * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-13 16:34:55
- */
 import { AnyObject, Commit } from '../types';
 import assert from '../utils/assert';
 

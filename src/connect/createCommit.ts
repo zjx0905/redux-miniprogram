@@ -1,9 +1,3 @@
-/*
- * @Author: early-autumn
- * @Date: 2020-03-29 17:29:05
- * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-14 09:43:24
- */
 import { Commit } from '../types';
 
 class CommitStatic implements Commit {

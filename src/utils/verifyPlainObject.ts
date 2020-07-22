@@ -1,9 +1,3 @@
-/*
- * @Author: early-autumn
- * @Date: 2020-04-04 19:38:10
- * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-13 13:26:40
- */
 import isPlainObject from './isPlainObject';
 import assert from './assert';
 

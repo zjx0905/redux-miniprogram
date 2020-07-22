@@ -1,9 +1,3 @@
-/*
- * @Author: early-autumn
- * @Date: 2020-03-29 21:06:40
- * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-08 00:22:25
- */
 import { AnyObject } from '../types';
 import { useStore, useState } from '../api/hooks';
 import createCommit from './createCommit';

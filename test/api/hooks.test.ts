@@ -1,10 +1,3 @@
-/*
- * @Author: early-autumn
- * @Date: 2020-04-05 13:20:18
- * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-20 17:56:10
- */
-
 import { createStore } from 'redux';
 import { useStore, useState, useDispatch } from '../../src/api/hooks';
 

@@ -1,9 +1,3 @@
-/*
- * @Author: early-autumn
- * @Date: 2020-04-05 19:43:52
- * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-20 17:56:24
- */
 import { createStore } from 'redux';
 import ConnectComponent from '../../src/api/Component';
 

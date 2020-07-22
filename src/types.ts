@@ -1,9 +1,3 @@
-/*
- * @Author: early-autumn
- * @Date: 2020-03-28 17:41:06
- * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-11 16:14:57
- */
 import 'miniprogram-api-typings';
 import { Store, Dispatch } from 'redux';
 

@@ -1,9 +1,3 @@
-/*
- * @Author: early-autumn
- * @Date: 2020-04-05 20:52:44
- * @LastEditors: early-autumn
- * @LastEditTime: 2020-04-11 16:41:16
- */
 import isPlainObject from '../../src/utils/isPlainObject';
 
 describe('测试 utils/isPlainObject.ts', () => {
