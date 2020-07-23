@@ -6,8 +6,8 @@ describe('测试 utils/diff.ts', () => {
 
     expect(
       diff(
-        { a: { v: 1 }, b: [1, 2, 3], c: null, d: undefined, e: 0, f: '', g: NaN },
-        { a: { v: 1 }, b: [1, 2, 3], c: null, d: undefined, e: 0, f: '', g: NaN }
+        { a: { v: 1 }, b: [1, 2, 3], c: null, d: void 0, e: 0, f: '', g: NaN },
+        { a: { v: 1 }, b: [1, 2, 3], c: null, d: void 0, e: 0, f: '', g: NaN }
       )
     ).toEqual({});
   });
@@ -17,7 +17,7 @@ describe('测试 utils/diff.ts', () => {
 
     expect(
       diff(
-        { a: { v: 1 }, b: [1, 2, 3], c: null, d: undefined, e: 1, f: '', g: 1 },
+        { a: { v: 1 }, b: [1, 2, 3], c: null, d: void 0, e: 1, f: '', g: 1 },
         { a: { v: {} }, b: [1, 2, 3, []], c: 1, d: 5, e: 2, f: '1', g: NaN }
       )
     ).toEqual({

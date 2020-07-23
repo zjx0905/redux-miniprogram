@@ -75,11 +75,11 @@ export default function connect(
       commit.run(() => {
         const { state: nextState, pureState: nextPureState } = mapStateToStore(rootState);
 
-        if (nextPureState !== undefined) {
+        if (nextPureState !== void 0) {
           Object.assign(pureState, nextPureState);
         }
 
-        if (nextState === undefined) {
+        if (nextState === void 0) {
           return;
         }
 
@@ -108,7 +108,7 @@ export default function connect(
 
       // 加载时如果取消订阅批量更新的函数不存在
       // 说明还没有订阅批量更新
-      if (unsubscribe === undefined) {
+      if (unsubscribe === void 0) {
         unsubscribe = batchUpdate.subscribe(updater);
       }
     }
@@ -127,10 +127,10 @@ export default function connect(
       // 当实例集合为空时
       // 如果存在取消订阅批量更新的函数
       // 需要取消订阅批量更新并将取消订阅批量更新的函数赋值为空
-      if (instances.length === 0 && unsubscribe !== undefined) {
+      if (instances.length === 0 && unsubscribe !== void 0) {
         unsubscribe();
 
-        unsubscribe = undefined;
+        unsubscribe = void 0;
       }
     }
 

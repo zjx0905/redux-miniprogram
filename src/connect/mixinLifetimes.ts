@@ -11,7 +11,7 @@ import { AnyObject, ConnectType } from '../types';
 function executeLifetime(this: AnyObject, cur: Function, old: Function, arg: any[]) {
   cur.call(this, ...arg);
 
-  if (old !== undefined) {
+  if (old !== void 0) {
     return old.call(this, ...arg);
   }
 }

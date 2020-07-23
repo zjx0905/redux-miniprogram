@@ -95,7 +95,7 @@ describe('测试 core/Page.ts', () => {
       state: { count: state.count },
       pureState: { count: state.count },
     }))({
-      data: { store: undefined },
+      data: { store: void 0 },
       update() {
         // 直接赋值 this.store 应该报错
         expect(() => (this.store = {})).toThrow();
@@ -137,7 +137,7 @@ describe('测试 core/Page.ts', () => {
       // 直接获取 pageOptions.data.store 应该报错
       expect(() => pageOptions.data.store).toThrow();
       // 直接修改 pageOptions.data.store 应该报错
-      expect(() => (pageOptions.data.store = undefined)).toThrow();
+      expect(() => (pageOptions.data.store = void 0)).toThrow();
 
       // 触发更新
       pageOptions.update();

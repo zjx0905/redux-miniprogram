@@ -8,7 +8,7 @@ describe('测试 utils/isPlainObject.ts', () => {
 
     // 不是普通对象
     expect(isPlainObject(null)).toBeFalsy();
-    expect(isPlainObject(undefined)).toBeFalsy();
+    expect(isPlainObject(void 0)).toBeFalsy();
     expect(isPlainObject(1)).toBeFalsy();
     expect(isPlainObject('')).toBeFalsy();
     expect(isPlainObject([])).toBeFalsy();
