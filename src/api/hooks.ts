@@ -14,7 +14,7 @@ export function useStore(): Store {
     store = getApp().store;
 
     assert(
-      store === void 0,
+      store !== void 0,
       `没有找到 Redux Store
       可能 app.js 中 Provider 此时还没有执行 或者 已经执行但没有将 Redux Store 作为参数传入`
     );

@@ -29,18 +29,18 @@ export default function proxyConnectStore(
       return { ...state, ...pureState, ...dispatch };
     },
     set() {
-      assert(commit.getState() === false, SET_ERROR_MESSAGE);
+      assert(commit.getState(), SET_ERROR_MESSAGE);
     },
   });
 
   Object.defineProperty(instance.data, 'store', {
     get() {
-      assert(commit.getState() === false, GET_ERROR_MESSAGE);
+      assert(commit.getState(), GET_ERROR_MESSAGE);
 
       return copyState;
     },
     set() {
-      assert(commit.getState() === false, SET_ERROR_MESSAGE);
+      assert(commit.getState(), SET_ERROR_MESSAGE);
     },
     enumerable: false,
   });

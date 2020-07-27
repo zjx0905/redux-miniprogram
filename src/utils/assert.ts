@@ -1,10 +1,11 @@
 /**
- * 如果出错，则抛出异常。
- * @param error 是否出错
- * @param message 错误信息
+ * 断言
+ *
+ * @param succeed 是否通过
+ * @param message 不通过时的错误信息
  */
-export default function assert(error: boolean, message: string): void {
-  if (error) {
+export default function assert(succeed: boolean, message: string): void {
+  if (!succeed) {
     const errMsg = `[redux-miniprogram]
     ${message}`;
 
