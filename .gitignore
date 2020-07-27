@@ -1,7 +1,0 @@
-/node_modules
-/package
-/types
-/coverage
-/yarn-error.log
-.idea
-.vscode
