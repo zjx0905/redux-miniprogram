@@ -6,7 +6,7 @@ import { AnyObject } from '../types';
  * @param x 参与对比的值
  * @param y 参与对比的值
  */
-function is(x: unknown, y: unknown) {
+function is(x: unknown, y: unknown): boolean {
   if (x === y) {
     // 处理 +0 === -0 等于 true 的问题
     return x !== 0 || y !== 0 || 1 / x === 1 / y;
@@ -31,7 +31,7 @@ function handler(
   target: AnyObject,
   path: string[],
   next: () => void
-) {
+): void {
   // 严格相等
   // 直接返回
   if (is(oldValue, newValue)) {
