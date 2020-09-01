@@ -1,9 +1,6 @@
 import 'miniprogram-api-typings';
 import { Store, Dispatch } from 'redux';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export declare type AnyObject = Record<string, any>;
-
 export declare type ProviderOptions<TStore extends Store, TAnyObject extends AnyObject> = ThisType<
   {
     /**

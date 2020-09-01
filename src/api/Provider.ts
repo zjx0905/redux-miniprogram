@@ -1,5 +1,5 @@
 import { Store } from 'redux';
-import { AnyObject, ProviderOptions } from '../types';
+import { ProviderOptions } from '../types';
 
 /**
  * 提供小程序唯一的 Redux Store

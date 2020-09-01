@@ -1,5 +1,5 @@
 import { Store, Dispatch } from 'redux';
-import { AnyObject } from '../types';
+
 import assert from '../utils/assert';
 
 let store: Store;

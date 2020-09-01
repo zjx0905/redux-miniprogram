@@ -1,8 +1,3 @@
-/**
- * 是一个普通对象吗?
- *
- * @param obj 要检查的对象
- */
 export default function isPlainObject(obj: unknown): boolean {
   if (typeof obj !== 'object' || obj === null) return false;
 

@@ -13,7 +13,7 @@ describe('测试 utils/diff.ts', () => {
   });
 
   it('diff Not equal', () => {
-    expect(diff({ a: 1 }, { a: 2 })).toEqual({ 'store.a': 2 });
+    expect(diff({ a: 1 }, { a: 2 })).toEqual({ "store['a']": 2 });
 
     expect(
       diff(
@@ -21,13 +21,13 @@ describe('测试 utils/diff.ts', () => {
         { a: { v: {} }, b: [1, 2, 3, []], c: 1, d: 5, e: 2, f: '1', g: NaN }
       )
     ).toEqual({
-      'store.a.v': {},
-      'store.b': [1, 2, 3, []],
-      'store.c': 1,
-      'store.d': 5,
-      'store.e': 2,
-      'store.f': '1',
-      'store.g': NaN,
+      "store['a']['v']": {},
+      "store['b']": [1, 2, 3, []],
+      "store['c']": 1,
+      "store['d']": 5,
+      "store['e']": 2,
+      "store['f']": '1',
+      "store['g']": NaN,
     });
   });
 });

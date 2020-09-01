@@ -1,4 +1,4 @@
-import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectPageOptions } from '../types';
+import { MapStateToStore, MapDispatchToStore, ConnectPageOptions } from '../types';
 import connect from '../connect';
 
 /**

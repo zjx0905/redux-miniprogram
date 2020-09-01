@@ -1,6 +1,6 @@
 import { Commit } from '../types';
 
-class CommitStatic implements Commit {
+class CommitClass implements Commit {
   task: 'sync' | 'async';
 
   state: boolean;
@@ -39,9 +39,6 @@ class CommitStatic implements Commit {
   }
 }
 
-/**
- * 创建提交
- */
 export default function createCommit(task?: 'sync' | 'async'): Commit {
-  return new CommitStatic(task);
+  return new CommitClass(task);
 }

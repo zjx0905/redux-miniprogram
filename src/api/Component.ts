@@ -1,4 +1,4 @@
-import { AnyObject, MapStateToStore, MapDispatchToStore, ConnectComponentOptions } from '../types';
+import { MapStateToStore, MapDispatchToStore, ConnectComponentOptions } from '../types';
 import connect from '../connect';
 
 /**

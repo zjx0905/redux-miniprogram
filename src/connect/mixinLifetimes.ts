@@ -1,13 +1,5 @@
-import { AnyObject, ConnectType } from '../types';
+import { ConnectType } from '../types';
 
-/**
- * 执行新增逻辑和原始生命周期函数
- *
- * @param this 当前实例
- * @param cur  新增逻辑
- * @param old  原始生命周期函数
- * @param arg  额外的参数数组
- */
 // eslint-disable-next-line @typescript-eslint/ban-types
 function executeLifetime(this: AnyObject, cur: Function, old: Function, arg: unknown[]) {
   cur.call(this, ...arg);
@@ -17,15 +9,6 @@ function executeLifetime(this: AnyObject, cur: Function, old: Function, arg: unk
   }
 }
 
-/**
- * 混合新增逻辑和原始生命周期函数
- *
- * 创建新的生命周期函数替换原始生命周期函数
- *
- * @param options Page Opatins
- * @param load 新增加载逻辑
- * @param unload 新增卸载逻辑
- */
 // eslint-disable-next-line @typescript-eslint/ban-types
 function pageLifetimes(options: AnyObject, load: Function, unload: Function) {
   function onLoad(this: AnyObject, ...arg: unknown[]) {
@@ -39,15 +22,6 @@ function pageLifetimes(options: AnyObject, load: Function, unload: Function) {
   return { ...options, onLoad, onUnload };
 }
 
-/**
- * 混合新增逻辑和原始生命周期函数
- *
- * 创建新的生命周期函数替换原始生命周期函数
- *
- * @param options Component Opatins
- * @param load 新增加载逻辑
- * @param unload 新增卸载逻辑
- */
 // eslint-disable-next-line @typescript-eslint/ban-types
 function componentLifetimes(options: AnyObject, load: Function, unload: Function) {
   function attached(this: AnyObject, ...arg: unknown[]) {
@@ -70,14 +44,6 @@ function componentLifetimes(options: AnyObject, load: Function, unload: Function
   };
 }
 
-/**
- * 混入新的生命周期函数
- *
- * @param type 连接的类型
- * @param options 创建实例需要的参数
- * @param load 新增加载逻辑
- * @param unload 新增卸载逻辑
- */
 export default function mixinLifetimes(
   type: ConnectType,
   options: AnyObject,
