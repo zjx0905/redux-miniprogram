@@ -14,7 +14,7 @@ export default function diff(
   target: AnyObject = {},
   path: string[] = ['store']
 ): AnyObject {
-  assert(path.length === 5, '数据层级不能超过 5 层');
+  assert(path.length <= 5, '数据层级不能超过 5 层');
 
   Object.keys(newValue).forEach((key: string) => {
     const oldKeyValue = oldValue[key];
