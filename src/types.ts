@@ -22,7 +22,7 @@ export declare type ConnectPageOptions<
 > = ThisType<
   {
     /**
-     * mapStateToStore() 和 mapDispatchToStore() 合并出的 Connect Store
+     * mapStateToProps() 和 mapDispatchToProps() 合并出的 Connect Store
      *
      * 含有订阅的 state 以及 dispatch 函数
      *
@@ -41,7 +41,7 @@ export declare type ConnectComponentOptions<
 > = ThisType<
   {
     /**
-     * mapStateToStore() 和 mapDispatchToStore() 合并出的 Connect Store
+     * mapStateToProps() 和 mapDispatchToProps() 合并出的 Connect Store
      *
      * 含有订阅的 state 以及 dispatch 函数
      *
@@ -75,13 +75,13 @@ export interface Commit {
   run: (handler: () => void) => void;
 }
 
-export interface MapStateToStore {
+export interface MapStateToProps {
   (state: AnyObject): {
     state?: AnyObject;
     pureState?: AnyObject;
   };
 }
 
-export interface MapDispatchToStore<T extends Dispatch = Dispatch> {
+export interface MapDispatchToProps<T extends Dispatch = Dispatch> {
   (dispatch: T): AnyObject;
 }

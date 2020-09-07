@@ -1,4 +1,4 @@
-import { MapStateToStore, MapDispatchToStore, ConnectType } from '../types';
+import { MapStateToProps, MapDispatchToProps, ConnectType } from '../types';
 import { useState, useDispatch } from '../api/hooks';
 import diff from '../utils/diff';
 import isEmptyObject from '../utils/isEmptyObject';
@@ -10,34 +10,34 @@ import proxyConnectStore from './proxyConnectStore';
 import mixinInitData from './mixinInitData';
 import mixinLifetimes from './mixinLifetimes';
 
-const mapStateToStoreDefault: MapStateToStore = () => ({});
+const mapStateToPropsDefault: MapStateToProps = () => ({});
 
-const mapDispatchToStoreDefault: MapDispatchToStore = (dispatch) => ({ dispatch });
+const mapDispatchToPropsDefault: MapDispatchToProps = (dispatch) => ({ dispatch });
 
 export default function connect(
   type: ConnectType,
-  mapStateToStore: MapStateToStore = mapStateToStoreDefault,
-  mapDispatchToStore: MapDispatchToStore = mapDispatchToStoreDefault
+  mapStateToProps: MapStateToProps = mapStateToPropsDefault,
+  mapDispatchToProps: MapDispatchToProps = mapDispatchToPropsDefault
 ) {
   return function connected(options: AnyObject): AnyObject {
     const commit = createCommit();
     const instances: AnyObject[] = [];
-    const { state = {}, pureState = {} } = mapStateToStore(useState());
+    const { state = {}, pureState = {} } = mapStateToProps(useState());
 
-    verifyPlainObject('mapStateToStore() state', state);
-    verifyPlainObject('mapStateToStore() pureState', pureState);
+    verifyPlainObject('mapStateToProps() state', state);
+    verifyPlainObject('mapStateToProps() pureState', pureState);
 
     const copyState = serializeCopy(state);
-    const dispatch = mapDispatchToStore(useDispatch());
+    const dispatch = mapDispatchToProps(useDispatch());
 
-    verifyPlainObject('mapDispatchToStore()', dispatch);
+    verifyPlainObject('mapDispatchToProps()', dispatch);
 
     // eslint-disable-next-line @typescript-eslint/ban-types
     let unsubscribe: Function | undefined;
 
     function updater(rootState: AnyObject) {
       commit.run(() => {
-        const { state: nextState, pureState: nextPureState } = mapStateToStore(rootState);
+        const { state: nextState, pureState: nextPureState } = mapStateToProps(rootState);
 
         if (nextPureState !== void 0) {
           Object.assign(pureState, nextPureState);

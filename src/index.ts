@@ -7,8 +7,8 @@ export {
   ProviderOptions,
   ConnectPageOptions,
   ConnectComponentOptions,
-  MapStateToStore,
-  MapDispatchToStore,
+  MapStateToProps,
+  MapDispatchToProps,
 } from './types';
 
 export { Provider, ConnectPage, ConnectComponent, useStore, useState, useDispatch };

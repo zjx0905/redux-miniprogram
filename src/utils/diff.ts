@@ -40,7 +40,7 @@ export default function diff(
       return;
     }
 
-    diff(oldKeyValue, newKeyValue, target, path);
+    diff(oldKeyValue, newKeyValue, target, currentPath);
   });
 
   return target;

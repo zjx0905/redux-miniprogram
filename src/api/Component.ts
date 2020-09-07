@@ -1,17 +1,17 @@
-import { MapStateToStore, MapDispatchToStore, ConnectComponentOptions } from '../types';
+import { MapStateToProps, MapDispatchToProps, ConnectComponentOptions } from '../types';
 import connect from '../connect';
 
 /**
  * Component 连接 Redux Store
  *
- * @param mapStateToStore    订阅的 state
- * @param mapDispatchToStore 包装过的 dispatch
+ * @param mapStateToProps    订阅的 state
+ * @param mapDispatchToProps 包装过的 dispatch
  *
  * @see[查看文档](https://github.com/early-autumn/redux-miniprogram#connectcomponentmapstatetostore-mapdispatchtostoreoptions)
  */
 export default function ConnectComponent<TStore extends AnyObject>(
-  mapStateToStore?: MapStateToStore,
-  mapDispatchToStore?: MapDispatchToStore
+  mapStateToProps?: MapStateToProps,
+  mapDispatchToProps?: MapDispatchToProps
 ) {
   return function Connected<
     TData extends WechatMiniprogram.Component.DataOption,
@@ -20,6 +20,6 @@ export default function ConnectComponent<TStore extends AnyObject>(
   >(
     options: ConnectComponentOptions<TStore, TData, TProperty, TMethod>
   ): ConnectComponentOptions<TStore, TData, TProperty, TMethod> {
-    return connect('component', mapStateToStore, mapDispatchToStore)(options);
+    return connect('component', mapStateToProps, mapDispatchToProps)(options);
   };
 }
